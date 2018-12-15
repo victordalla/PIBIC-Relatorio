@@ -1,0 +1,85 @@
+---
+output: pdf_document
+papersize: a4paper
+fontsize: 12pt
+documentclass: article
+geometry: margin=2cm
+header-includes:
+  - \usepackage[brazil, english, portuguese]{babel}
+  - \usepackage[utf8]{inputenc}
+  - \usepackage[T1]{fontenc}
+  - \usepackage[fixlanguage]{babelbib}
+  - \usepackage{times}
+  - \usepackage{setspace}
+  
+  - \usepackage{graphicx}
+  - \usepackage{wrapfig}
+  - \usepackage[final]{pdfpages}
+  
+  - \usepackage{amsfonts}
+  - \usepackage{amssymb}
+  - \usepackage{amsmath}
+  
+  - \usepackage{fancyhdr}
+  - \usepackage{subcaption}
+  - \usepackage{booktabs}
+  - \usepackage{caption}
+  - \usepackage{float}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, 
+                      message = FALSE,
+                      warning = FALSE,
+                      hide = TRUE,
+                      tidy.opts = list(width.cutoff = 60),
+                      tidy = TRUE)
+options(OutDec = ",", 
+        digits = 2, 
+        knitr.table.format = "latex", 
+        xtable.comment = FALSE)
+```
+
+\begin{titlepage}
+	\centering
+	  \begin{minipage}[b]{0.2\textwidth}    %% b or t, default is c
+    \includegraphics[width=\linewidth]{logo-imecc}
+  \end{minipage}%
+  \begin{minipage}[b][2cm]{0.6\textwidth}
+    \centering\bfseries\large
+    Instituto de Matemática, Estatística e Computação Científica \vfill
+    Universidade Estadual de Campinas \vfill
+  \end{minipage}%
+  \begin{minipage}[b]{0.2\textwidth}
+    \includegraphics[width=\linewidth]{unicamp}
+  \end{minipage}
+	\vspace{2cm}
+	{\scshape\Large Relatório final\par}
+	\vspace{1.5cm}
+	{\huge\bfseries Análise de custo efetividade para diagnóstico de --- na saúde suplementar\par}
+	\vspace{2cm}
+	{\Large\itshape Victor D P Cunha, RA 206493\par}
+	\vfill
+	orientado por\par
+	Dra. Tatiana Benaglia
+	\vfill
+% Bottom of the page
+	{\large \today\par}
+\end{titlepage}
+
+
+\begin{abstract}
+
+\end{abstract}
+
+# Introdução
+
+
+# Materiais e métodos
+
+# Resultados
+
+# Discussão
+
+\bibliographystyle{acm}
+\bibliography{ref}
