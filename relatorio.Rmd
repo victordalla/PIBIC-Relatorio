@@ -10,11 +10,10 @@ header-includes:
   - \usepackage[T1]{fontenc}
   - \usepackage[fixlanguage]{babelbib}
   - \usepackage{times}
-  - \usepackage{setspace}
-  
+
   - \usepackage{graphicx}
   - \usepackage{wrapfig}
-  - \usepackage[final]{pdfpages}
+  - \usepackage{pdfpages}
   
   - \usepackage{amsfonts}
   - \usepackage{amssymb}
@@ -56,12 +55,14 @@ options(OutDec = ",",
 	\vspace{2cm}
 	{\scshape\Large Relatório final\par}
 	\vspace{1.5cm}
-	{\huge\bfseries Análise de custo efetividade para diagnóstico de --- na saúde suplementar\par}
+	{\huge\bfseries Aplicação de análise de custo-efetividade para diagnósticos com exames de sequenciamento genético em deficientes intelectuais\par}
 	\vspace{2cm}
 	{\Large\itshape Victor D P Cunha, RA 206493\par}
 	\vfill
 	orientado por\par
-	Dra. Tatiana Benaglia
+	Dra. Tatiana Benaglia\par
+	coorientado por\par
+	Dra. Joana Prota
 	\vfill
 % Bottom of the page
 	{\large \today\par}
@@ -69,17 +70,76 @@ options(OutDec = ",",
 
 
 \begin{abstract}
-
+As novas gerações de sequenciamento de DNA têm reduzidos os custos e têm sido usadas em escala comercial. Assim, elas fazem parte, hoje, do rol de exames disponíveis para diagnósticos de casos clínicos apropriados. Em particular, ressaltamos o uso do sequenciamento do exoma, que tem capacidade diagnóstica alta \cite{de2013detection,stark2016prospective} e custo em constante queda \cite{metzker2010sequencing,nih2017costdna}. Entretanto, é observado uma gestão ineficente dessas tecnologias na saúde pública e privada brasileira, que ainda tem como exames de primeira linha métodos tradicionais e ineficientes  \cite{minsaude2014raras,ANS2013rol}. Tendo isso em vista, o presente estudo aplica uma análise de custo-efetividade para o diagnóstico de pacientes com deficiência intelectual, modelando o processo de diagnóstico em uma árvore de decisão, e, então, realiza uma análise de sensitividade nesse modelo. Os resultados indicam que !!!!!!!!!!!!!!!!!.
 \end{abstract}
 
 # Introdução
 
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.7\textwidth]{costpermb_2017}
+\caption{Gráfico de linhas do custo por megabase de sequência de DNA entre 2001 e 2017 \cite{nih2017costdna}. Nele, é possível observar uma queda de custo drástica a partir de 2008.}
+\label{fig:custo}
+\end{figure}
+
+Desde 2005, novas gerações de plataformas de sequenciamento de DNA reduziram o custo de sequenciamento de DNA em quatro ordens de magnitude com relação ao sequenciamento de Sanger \cite{metzker2010sequencing} (*cf.* Figura \ref{fig:custo}). Após o lançamento comercial dessas plataformas de sequenciamento, ocorreu um barateamento de testes clínicos genéticos, o que permitiu a ampliação do uso de vários exames complementares na prática clínica, dentre eles, o sequenciamento do exoma. A aplicação das inovações tecnológicas propiciadas pelos avanços da medicina genômica possibilitou maior eficácia no diagnóstico de exames ao mesmo tempo que diminuiu custos. Neste contexto, foi analisar o custo-efetividade em diferentes estratégias diagnósticas se torna crucial para o uso racional dessas tecnologias. Por isso, essa análise foi realizada em pacientes com deficiência inteletual, na perspectiva do sistema de saúde público e privado brasileiro.
+
+No âmbito do SUS, a Política Nacional de Atenção Integral às Pessoas com
+Doenças Raras \cite{minsaude2014raras} prevê a realização de *chromosomal microarray* para investigação etiológica de condições determinadas geneticamente. Anteriormente a ANS já havia incorporado como método complementar de diagnóstico, com diretriz de utilização \cite{ANS2013rol}, o *chromosomal microarray* para casos de atraso de desenvolvimento neuropsicomotor ou deficiência intelectual, entretanto este teste genético não foi incorporado como exame diagnóstico de primeira linha, sendo exigido o cariótipo convencional, além de outros critérios clínicos \cite{ANS2013rol}. Também é válido ressaltar que, apesar de alguns autores já sugerirem que em alguns casos o exoma deve preceder o “chromosomal microarray” como teste genético inicial \cite{de2013detection,stark2016prospective}. Mesmo assim, nem o sistema público brasileiro, nem o privado consideraram a possibilidade de aplicar tal exame diagnóstico de forma sistemática.
+
+Concomitantemente a ampliação do uso de testes genômicos, observou-se nos
+últimos anos um aumento crescente dos gastos em saúde, tanto no SUS quanto na
+saúde suplementar \cite{minsaude2008avecon}. Esta oneração do setor deve-se não somente à inovação tecnológica, mas também ao uso irracional das novas tecnologias. Além do que, é preciso considerar uma particularidade do mercado em saúde que é a sobreposição de diferentes tecnologias, ao contrário do que ocorre em outros cenários em que as tecnologias novas substituem as antigas: na medicina, particularmente na área da genética médica, testes mais novos, mais amplos e com maior resolução surgem para agregar a investigação sem retirar do mercado testes genéticos mais antigos.
+
+Tendo em vista este fenômeno, foi lançada no Brasil a Política Nacional de
+Gestão de Tecnologias em Saúde \cite{minsaude2008gestao} reconhecendo a necessidade de elaborar mecanismos de avaliação e regulação das inovações tecnológicas em diferentes etapas do ciclo de vida de uma tecnologia e na perspectiva da realidade brasileira. Sendo assim, os estudos de avaliação de tecnologias em saúde, dentre eles os de custo-efetividade de testes diagnósticos, tem se mostrado cruciais para subsidiar o uso apropriado das ferramentas diagnósticas disponíveis e não somente importar testes diagnósticos de países desenvolvidos sem considerar as características locais e a capacidade instalada de um país \cite{minsaude2008gestao,baltussen2003making}. Para tanto, é importante a elaboração de modelos matemáticos que incorporem as particularidades e a complexidade da assistência médica brasileira, considerando a efetividade diagnóstica não somente como um produto do rendimento ou da acurácia diagnóstica, mas considerando também o número de consultas entre o início e o final da investigação etiológica, dentre outros aspectos.
 
 # Materiais e métodos
+
+Este estudo tem como objetivo principal elaborar modelos matemáticos de
+custo-efetividade que comparam diferentes abordagens diagnósticas com testes
+genéticos para populações distintas de pacientes, visando gerar evidência
+científica para o uso racional de novas tecnologias em saúde. A população tomada para análise é a de pacientes (i) com deficiência intelectual inespecífica e (ii) com quadro sindrômico específico de herança monogênica presumida. A elaboração do modelo matemático tem como perspectiva a do SUS e da Saúde Suplementar.
+
+Na análise de custo-efetividade, dados provenientes de diversas fontes, como dados
+primários, revisões sistemáticas e estudos de custos, podem ser integrados em
+modelos como árvores de decisão, coortes simuladas de Markov, microssimulação no
+nível de pacientes ou simulação de eventos discretos, a fim de oferecer estimativas mais robustas das reais relações de custo-efetividade existentes e do grau de incerteza dos valores obtidos \cite{briggs2006decision,drummond2015methods,gray2011applied,silva2003avaliaccao,soarez2014modelos}.
+
+## Árvores de decisão
+
+No caso da análise de custo-efetividade para estratégias diagnósticas com testes
+genéticos, é mais adequado utilizar modelos de árvores de decisão. Isso porque o diagnóstico é um processo de curta duração sem altos níveis de interação entre pacientes ou entre pacientes e procedimentos, sem repetições ou depedência temporal. Além disso, possui alta interpretabilidade, transparência e apresenta explicitamente no modelo as alternativas consideradas \cite{petrou2011economic,barton2004modelling,brennan2006taxonomy}.
+
+Numa árvore de decisão, todos os possíveis desfechos são determinados por cada decisão disponível (exames), que serão avaliados em termos de seus respectivos custos e efetividades. O custo é medido em unidades monetárias e a efetividade é medida em unidades clínicas, que nesse caso é o número de casos diagnosticados em uma população específica (pacientes com deficiência intelectual). As diferentes estratégias são então comparadas entre si através da razão entre a diferença de custos e a diferença de efetividade (CE) \cite{minsaude2008avaliacao}. Desse modo, o resultado é expresso em termos do custo por unidade clínica \cite{gray2011applied}.
+
+O primeiro nó da árvore de decisão é um quadrado com as decisões disponíveis. Uma vez escolhida uma decisão, temos eventos (mutuamente exclusivos e exaustivos) que decorrem dessa decisão ou mais decisões a serem tomadas. Eventos emanam de um nó (círculo) com suas respectivas probabilidades estimadas. Eventos também podem desencadear outros eventos ou decisões e por isso podem haver mais nós "quadrados" ou "círculo". Cada sequência de decisões e eventos possíveis terminam em um nó (triângulo) que associa um custo e uma efetividade àquela sequência.
+
+A ideia por traz da árvore de decisão é estimar o custo-efetividade esperado de cada decisão, usando de maneira intuitiva e sistemática o Teorema da Esperança Total: $E(X) = E(E(X|Y))$. Para isso, realiza-se um procedimento que começa do último nível (nós "triângulo") ao primeiro ("nó quadrado"). O último nível já deve ter associado em cada nó seus respectivos custos e efetividades; para o próximo nível, em cada nó é associado um custo e uma efetividade que é a média dos custos e efetividades dos nós que emanam dele, ponderada pela probabilidade de se chegar a esses nós a partir dele. Esse procedimento se repete nível a nível até o primeiro. Assim, é obtido os custos e efetividades esperadas ao se tomar cada decisão \cite{gray2011applied}.
+
+O modelo elaborado para avaliar diagnóstico em pacientes com deficiência intelectual está esquematizado na Figura \ref{fig:arvore}.
+
+
+\begin{figure}
+\centering
+% left, bottom, right, top
+\includegraphics[width=\textwidth, trim = 12mm 8mm 12mm 8mm, clip]{arvore}
+\caption{.}
+\label{fig:arvore}
+\end{figure}
+
+
+## Análise de sensitividade
+
+A fim de avaliar a incerteza ao redor das estimativas dos parâmetros utilizadas no modelo, é recomendado realizar uma análise de sensitividade, que pode ser feita de forma determinística ou probabilística. Ela consiste em viariar um ou mais parâmetros de maneira sistemática ou probabilística, respectivamente, e, então, avaliar o modelo novamente com esses parâmetros \cite{baltussen2003making,briggs1994uncertainty,weinstein1977foundations}. Essa análise permite medir e quantificar o grau de robustez dos resultados, além de ser uma ferramenta que pode contribuir para a tomada de decisão. A análise de sensitividade probabilística é uma ferramenta mais poderosa \cite{baltussen2003making} e por isso será feita no modelo desse estudo.
+
+A análise de sensitividade mais apropriada para os dados disponíveis (custos de laboratórios determinados por especialista e estimativas da efetividade dos exames na literatura) é a que consiste em variar os parâmetros do modelo (custos e efetividades do exames) de acordo com uma distribuição *a priori* determinada pela natureza do parâmetro e estimativas usadas ou opinião de especialistas \cite{briggs2000handling}. Para os custos, o mais apropriado é o uso de das distribuições LogNomal ou Gama, que têm como suporte $[0, \infty]$ \cite{briggs2000handling,gray2011applied}, e para as efetividades, é adequado o uso da distribuição Beta, que tem como suporte $[0,1]$ \cite{briggs2000handling,gray2011applied}.
+
+A parametrização da LogNormal é $C \sim LogNormal(\mu, \sigma^2)$, em que os estimadores de máxima verossimilhança de $\mu$ e $\sigma^2$ são, respectivamente, $\hat\mu = \frac{1}{n} \sum \ln c_i$ e $\frac{1}{n} \sum (\ln c_i - \hat\mu)^2$ \cite{degroot2012probability}. A parametrização da Beta é $E \sim Beta(\alpha, \beta)$, em que os estimadores pelo método dos momentos é $\hat{\alpha} = \bar{E} \bigg(\frac{\bar{E}(1 - \bar{E})}{S_E^2} - 1\bigg)$ e $\hat{\beta} = (1-\bar{E}) \bigg(\frac{\bar{E}(1 - \bar{E})}{S_E^2} - 1\bigg)$ \cite{degroot2012probability}. Essas estimativas serão usadas como parâmetros das distribuições, que por sua vez serão usadas na análise de sentividade.
 
 # Resultados
 
 # Discussão
 
-\bibliographystyle{acm}
+\bibliographystyle{plain}
 \bibliography{ref}
