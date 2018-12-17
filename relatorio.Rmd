@@ -82,10 +82,7 @@ As novas gerações de sequenciamento de DNA têm reduzidos os custos e têm sid
 \label{fig:custo}
 \end{figure}
 
-Desde 2005, novas gerações de plataformas de sequenciamento de DNA reduziram o custo de sequenciamento de DNA em quatro ordens de magnitude com relação ao sequenciamento de Sanger \cite{metzker2010sequencing} (*cf.* Figura \ref{fig:custo}). Após o lançamento comercial dessas plataformas de sequenciamento, ocorreu um barateamento de testes clínicos genéticos, o que permitiu a ampliação do uso de vários exames complementares na prática clínica, dentre eles, o sequenciamento do exoma. A aplicação das inovações tecnológicas propiciadas pelos avanços da medicina genômica possibilitou maior eficácia no diagnóstico de exames ao mesmo tempo que diminuiu custos. Neste contexto, foi analisar o custo-efetividade em diferentes estratégias diagnósticas se torna crucial para o uso racional dessas tecnologias. Por isso, essa análise foi realizada em pacientes com deficiência inteletual, na perspectiva do sistema de saúde público e privado brasileiro.
-
-No âmbito do SUS, a Política Nacional de Atenção Integral às Pessoas com
-Doenças Raras \cite{minsaude2014raras} prevê a realização de *chromosomal microarray* para investigação etiológica de condições determinadas geneticamente. Anteriormente a ANS já havia incorporado como método complementar de diagnóstico, com diretriz de utilização \cite{ANS2013rol}, o *chromosomal microarray* para casos de atraso de desenvolvimento neuropsicomotor ou deficiência intelectual, entretanto este teste genético não foi incorporado como exame diagnóstico de primeira linha, sendo exigido o cariótipo convencional, além de outros critérios clínicos \cite{ANS2013rol}. Também é válido ressaltar que, apesar de alguns autores já sugerirem que em alguns casos o exoma deve preceder o “chromosomal microarray” como teste genético inicial \cite{de2013detection,stark2016prospective}. Mesmo assim, nem o sistema público brasileiro, nem o privado consideraram a possibilidade de aplicar tal exame diagnóstico de forma sistemática.
+Desde 2005, novas gerações de plataformas de sequenciamento de DNA reduziram o custo de sequenciamento de DNA em quatro ordens de magnitude com relação ao sequenciamento de Sanger \cite{metzker2010sequencing} (*cf.* Figura \ref{fig:custo}). Após o lançamento comercial dessas plataformas de sequenciamento, ocorreu um barateamento de testes clínicos genéticos, o que permitiu a ampliação do uso de vários exames complementares na prática clínica, dentre eles, o sequenciamento do exoma. A aplicação das inovações tecnológicas propiciadas pelos avanços da medicina genômica possibilitou maior eficácia no diagnóstico de exames ao mesmo tempo que diminuiu custos. Neste contexto, foi analisar o custo-efetividade em diferentes estratégias diagnósticas se torna crucial para o uso racional dessas tecnologias.
 
 Concomitantemente a ampliação do uso de testes genômicos, observou-se nos
 últimos anos um aumento crescente dos gastos em saúde, tanto no SUS quanto na
@@ -94,12 +91,17 @@ saúde suplementar \cite{minsaude2008avecon}. Esta oneração do setor deve-se n
 Tendo em vista este fenômeno, foi lançada no Brasil a Política Nacional de
 Gestão de Tecnologias em Saúde \cite{minsaude2008gestao} reconhecendo a necessidade de elaborar mecanismos de avaliação e regulação das inovações tecnológicas em diferentes etapas do ciclo de vida de uma tecnologia e na perspectiva da realidade brasileira. Sendo assim, os estudos de avaliação de tecnologias em saúde, dentre eles os de custo-efetividade de testes diagnósticos, tem se mostrado cruciais para subsidiar o uso apropriado das ferramentas diagnósticas disponíveis e não somente importar testes diagnósticos de países desenvolvidos sem considerar as características locais e a capacidade instalada de um país \cite{minsaude2008gestao,baltussen2003making}. Para tanto, é importante a elaboração de modelos matemáticos que incorporem as particularidades e a complexidade da assistência médica brasileira, considerando a efetividade diagnóstica não somente como um produto do rendimento ou da acurácia diagnóstica, mas considerando também o número de consultas entre o início e o final da investigação etiológica, dentre outros aspectos.
 
+No âmbito do SUS, a Política Nacional de Atenção Integral às Pessoas com
+Doenças Raras \cite{minsaude2014raras} prevê a realização de *chromosomal microarray* para investigação etiológica de condições determinadas geneticamente. Anteriormente a ANS já havia incorporado como método complementar de diagnóstico, com diretriz de utilização \cite{ANS2013rol}, o *chromosomal microarray* para casos de atraso de desenvolvimento neuropsicomotor ou deficiência intelectual, entretanto este teste genético não foi incorporado como exame diagnóstico de primeira linha, sendo exigido o cariótipo convencional, além de outros critérios clínicos \cite{ANS2013rol}. Também é válido ressaltar que, apesar de alguns autores já sugerirem que em alguns casos o exoma deve preceder o “chromosomal microarray” como teste genético inicial \cite{de2013detection,stark2016prospective}. Mesmo assim, nem o sistema público brasileiro, nem o privado consideraram a possibilidade de aplicar tal exame diagnóstico de forma sistemática.
+
+Este trabalho aplica uma análise de custo-efetividade no diagnóstico de pacientes com deficiência intelectual. Para verificar a robustez da análise e como ferramenta de tomada de decisão, também foi realizado uma análise de sensitividade. A decisão é com relação a quais exames entram no rol de diagnóstico desses pacientes e qual a prioridade deles dentro do processo diagnóstico, sendo um deles tomado como o de "primeira linha", ou seja, o primeiro a ser utilizado na investigação diagnóstica. O exames considerados são: análise de cariótipo (abreviado "cariótipo"), *microarray* e sequenciamento completo do exoma (abreviado para*"exoma"). Atualmente, o exame de primeira linha para esses casos é o !!!!!!!!!!!!!!!!, sendo conduzido os exames !!!!!!!! e !!!!!!!!! caso ele não tenha sucesso em diagnosticar o quadro clínico.
+
 # Materiais e métodos
 
 Este estudo tem como objetivo principal elaborar modelos matemáticos de
 custo-efetividade que comparam diferentes abordagens diagnósticas com testes
 genéticos para populações distintas de pacientes, visando gerar evidência
-científica para o uso racional de novas tecnologias em saúde. A população tomada para análise é a de pacientes (i) com deficiência intelectual inespecífica e (ii) com quadro sindrômico específico de herança monogênica presumida. A elaboração do modelo matemático tem como perspectiva a do SUS e da Saúde Suplementar.
+científica para o uso racional de novas tecnologias em saúde. A população tomada para análise é a de pacientes (i) com deficiência intelectual inespecífica e (ii) !!!!!!!!!! com quadro sindrômico específico de herança monogênica presumida. A elaboração do modelo matemático tem como perspectiva a do SUS e da Saúde Suplementar.
 
 Na análise de custo-efetividade, dados provenientes de diversas fontes, como dados
 primários, revisões sistemáticas e estudos de custos, podem ser integrados em
@@ -117,14 +119,16 @@ Numa árvore de decisão, todos os possíveis desfechos são determinados por ca
 
 A ideia por traz da árvore de decisão é estimar o custo-efetividade esperado de cada decisão, usando de maneira intuitiva e sistemática o Teorema da Esperança Total: $E(X) = E(E(X|Y))$. Para isso, realiza-se um procedimento que começa do último nível (nós "triângulo") ao primeiro ("nó quadrado"). O último nível já deve ter associado em cada nó seus respectivos custos e efetividades; para o próximo nível, em cada nó é associado um custo e uma efetividade que é a média dos custos e efetividades dos nós que emanam dele, ponderada pela probabilidade de se chegar a esses nós a partir dele. Esse procedimento se repete nível a nível até o primeiro. Assim, é obtido os custos e efetividades esperadas ao se tomar cada decisão \cite{gray2011applied}.
 
-O modelo elaborado para avaliar diagnóstico em pacientes com deficiência intelectual está esquematizado na Figura \ref{fig:arvore_teoria}.
+A árvore elaborada para avaliar diagnóstico em pacientes com deficiência intelectual está esquematizada na Figura \ref{fig:arvore_teoria}. Nela, o primeiro nó é um nó de decisão, cujas possibilidades são: "cariótipo" (Ca), "microarray" (Arr), "exoma" (Ex). Avaliar o custo-efetividade de cada possibilidade é o objetivo deste trabalho. Cada possibilidade de exame tem como consequência um de dois eventos: ou o exame tomado foi capaz de diagnosticar o paciente, ou ele não foi e, nesse caso, um outro exame dentro do rol de procedimentos é realizado buscando o diagnóstico.
+
+A probabilidade tomada para cada evento é redimento médio (Ef) de cada exame na literatura revisada. O nó terminal representa o que se gastou com todo o processo (C) e o número médio de diagnósticos que se obteria a cada 100 pacientes com aquele processo tomado (100Ef). O custo foi calculado com base no valor comercial encontrado em laboratórios brasileiros determinados por especialista. O número médio de diagnósticos a cada 100 é determinado por cada caminho na árvore e, portanto, somente é necessária sua soma simples para o cálculo da efetiviadade esperada para cad decisão, em contrapartida, o custo esperado para cada decisão deve ser calculado como descrito no parágrafo anterior.
 
 
 \begin{figure}
 \centering
 % left, bottom, right, top
 \includegraphics[width=\textwidth, trim = 12mm 8mm 12mm 4mm, clip]{arvore_teoria}
-\caption{.}
+\caption{Árvore de decisão para diagnóstico de pacientes com deficiência intelectual, tomando como exame de primeira linha a análise de cariótipo (indicado por "cariótipo" e sigla Ca), microarray (sigla Arr) ou sequenciamento completo do exoma (indicado por "exoma" e sigla Ex).}
 \label{fig:arvore_teoria}
 \end{figure}
 
