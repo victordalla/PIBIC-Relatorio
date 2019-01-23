@@ -1,29 +1,29 @@
 ---
-documentclass: article
+output: pdf_document
+papersize: a4paper
 fontsize: 12pt
+documentclass: article
 geometry: margin=2cm
 header-includes:
-- \usepackage[brazil, english, portuguese]{babel}
-- \usepackage[utf8]{inputenc}
-- \usepackage[T1]{fontenc}
-- \usepackage[fixlanguage]{babelbib}
-- \usepackage{times}
-- \usepackage{graphicx}
-- \usepackage{wrapfig}
-- \usepackage{pdfpages}
-- \usepackage{amsfonts}
-- \usepackage{amssymb}
-- \usepackage{amsmath}
-- \usepackage{fancyhdr}
-- \usepackage{subcaption}
-- \usepackage{booktabs}
-- \usepackage{caption}
-- \usepackage{float}
-output:
-  pdf_document: default
-  html_document:
-    df_print: paged
-papersize: a4paper
+  - \usepackage[brazil, english, portuguese]{babel}
+  - \usepackage[utf8]{inputenc}
+  - \usepackage[T1]{fontenc}
+  - \usepackage[fixlanguage]{babelbib}
+  - \usepackage{times}
+
+  - \usepackage{graphicx}
+  - \usepackage{wrapfig}
+  - \usepackage{pdfpages}
+  
+  - \usepackage{amsfonts}
+  - \usepackage{amssymb}
+  - \usepackage{amsmath}
+  
+  - \usepackage{fancyhdr}
+  - \usepackage{subcaption}
+  - \usepackage{booktabs}
+  - \usepackage{caption}
+  - \usepackage{float}
 ---
 
 ```{r setup, include=FALSE}
@@ -98,7 +98,7 @@ Este estudo tem como objetivo principal elaborar modelos matemáticos de custo-e
 
 Na análise de custo-efetividade, dados provenientes de diversas fontes, como dados primários, revisões sistemáticas e estudos de custos, podem ser integrados em modelos como árvores de decisão, coortes simuladas de Markov, microssimulação no nível de pacientes ou simulação de eventos discretos, a fim de oferecer estimativas mais robustas das reais relações de custo-efetividade existentes e do grau de incerteza dos valores obtidos \cite{briggs2006decision, drummond2015methods, gray2011applied, silva2003avaliaccao, soarez2014modelos}.
 
-As diferentes estratégias são comparadas entre si através da razão custo-efetividade incremental (RCEI) ou do inglês *Incremental Cost Effectiveness Ratio* (ICER). A RCEI é definida como a razão entre a diferença de custos das duas estratégias em comparação (custo incremental) e a diferença de efetividade (efetividade incremental) \cite{minsaude2008avaliacao} (CITAR TB ESSE ARTIGO AQUI: http://www.scielo.br/scielo.php?script=sci_arttext&pid=S0004-28032010000400002) O custo é medido em unidades monetárias e a efetividade é medida em unidades clínicas, que nesse caso é o preço comercial do exame e número médio de casos diagnosticados pelo exame a cada 100 pacientes com deficiência intelectual, respectivamente. Desse modo, o resultado é expresso em termos do custo por unidade clínica \cite{gray2011applied}.
+As diferentes estratégias são comparadas entre si através da razão custo-efetividade incremental (RCEI) ou do inglês *Incremental Cost Effectiveness Ratio* (ICER). A RCEI é definida como a razão entre a diferença de custos das duas estratégias em comparação (custo incremental) e a diferença de efetividade (efetividade incremental) \cite{minsaude2008avaliacao,SECOLI2010}. O custo é medido em unidades monetárias e a efetividade é medida em unidades clínicas, que nesse caso é o preço comercial do exame e número médio de casos diagnosticados pelo exame a cada 100 pacientes com deficiência intelectual, respectivamente. Desse modo, o resultado é expresso em termos do custo por unidade clínica \cite{gray2011applied}.
 
 
 ## Árvores de decisão
@@ -112,13 +112,13 @@ A ideia por traz da árvore de decisão é estimar o custo-efetividade esperado 
 
 A árvore elaborada para avaliar diagnóstico em pacientes com deficiência intelectual está esquematizada na Figura \ref{fig:arvore_teoria}. Nela, o primeiro nó é um nó de decisão, cujas possibilidades são: "cariótipo" (Ca), "microarray" (Arr), "exoma" (Ex). Avaliar o custo-efetividade de cada possibilidade é o objetivo deste trabalho. Cada possibilidade de exame tem como consequência um de dois eventos: ou o exame tomado foi capaz de diagnosticar o paciente, ou ele não foi e, nesse caso, um outro exame dentro do rol de procedimentos é realizado buscando o diagnóstico.
 
-<!-- \begin{figure} -->
-<!-- \centering -->
-<!-- % left, bottom, right, top -->
-<!-- \includegraphics[width=\textwidth, trim = 12mm 8mm 12mm 4mm, clip]{arvore_teoria} -->
-<!-- \caption{Árvore de decisão para diagnóstico de pacientes com deficiência intelectual, tomando como exame de primeira linha a análise de cariótipo (indicado por "cariótipo" e sigla Ca), microarray (sigla Arr) ou sequenciamento completo do exoma (indicado por "exoma" e sigla Ex).} -->
-<!-- \label{fig:arvore_teoria} -->
-<!-- \end{figure} -->
+\begin{figure}
+\centering
+% left, bottom, right, top
+\includegraphics[width=\textwidth, trim = 12mm 8mm 12mm 4mm, clip]{arvore_teoria.pdf}
+\caption{Árvore de decisão para diagnóstico de pacientes com deficiência intelectual, tomando como exame de primeira linha a análise de cariótipo (indicado por "cariótipo" e sigla Ca), microarray (sigla Arr) ou sequenciamento completo do exoma (indicado por "exoma" e sigla Ex).}
+\label{fig:arvore_teoria}
+\end{figure}
 
 A probabilidade tomada para cada evento é o rendimento médio (Ef) de cada exame na literatura revisada. O nó terminal representa o que se gastou com todo o processo (C) e o número médio de diagnósticos que se obteria a cada 100 pacientes com aquele processo tomado (100Ef). O custo foi calculado com base no valor comercial encontrado em laboratórios brasileiros determinados por especialista. O número médio de diagnósticos a cada 100 pacientes é determinado por cada caminho na árvore e, portanto, somente é necessária sua soma simples para o cálculo da efetividade esperada para cada decisão. Em contrapartida, o custo esperado para cada decisão deve ser calculado como descrito no parágrafo anterior.
 
@@ -134,7 +134,17 @@ A parametrização da LogNormal é $C \sim LogNormal(\mu, \sigma^2)$, em que os 
 
 # Resultados
 
+Os dados obtidos determinam a árvore ilustrada na figura \ref{fig:arvore_dados}. Nela, está destacado a sequência de exames com o menor custo-efetividade para esses dados.
 
+<!-- \begin{figure} -->
+<!-- \centering -->
+<!-- % left, bottom, right, top -->
+<!-- \includegraphics[width=\textwidth, trim = 12mm 8mm 12mm 4mm, clip]{arvore_teoria} -->
+<!-- \caption{Árvore de decisão para diagnóstico de pacientes com deficiência intelectual, tomando como exame de primeira linha a análise de cariótipo (indicado por "cariótipo"), microarray ou sequenciamento completo do exoma (indicado por "exoma").} -->
+<!-- \label{fig:arvore_dados} -->
+<!-- \end{figure} -->
+
+No entanto, estes números podem não corresponder a parte da realidade ou às alterações de custo e efetividade futuras. Por isso, foi realizada uma análise de sensitividade.
 
 # Discussão
 
