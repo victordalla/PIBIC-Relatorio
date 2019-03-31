@@ -52,6 +52,7 @@ ComputeICER <- function(df, Exame, base) {
     return(df)
   }
 
+  
 param <- list(
   Exoma = list(
     efetiv = list(base = 0.27), 
@@ -68,7 +69,8 @@ param <- list(
   )
 nrun <- 1000
 
-
+run_simulation <- function() {
+  
 ## Exoma
 EfEx <- c(27, 32, 41, 32.5, 27.2) / 100
 set.seed(42)
@@ -140,3 +142,12 @@ base_cariotipo <- ComputeTree(
   param$Exoma$efetiv$base, param$Microarray$efetiv$base, param$Cariotipo$efetiv$base, 
   param$Exoma$custo$base, param$Microarray$custo$base, param$Cariotipo$custo$base
   )
+
+list(
+  anal_sens      = anal_sens, 
+  base_cariotipo = base_cariotipo, 
+  EfEx_simul  = EfEx_simul, CEx_simul   = CEx_simul, 
+  EfArr_simul = EfArr_simul, CArr_simul = CArr_simul, 
+  EfCa_simul  = EfCa_simul, CCa_simul   = CCa_simul
+)
+}

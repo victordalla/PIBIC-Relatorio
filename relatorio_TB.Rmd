@@ -27,17 +27,27 @@ header-includes:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE, 
-                      message = FALSE,
-                      warning = FALSE,
-                      hide = TRUE,
-                      tidy.opts = list(width.cutoff = 60),
-                      tidy = TRUE)
-options(OutDec = ",", 
-        digits = 2, 
-        knitr.table.format = "latex", 
-        xtable.comment = FALSE)
+knitr::opts_chunk$set(
+  echo = FALSE, 
+  message = FALSE,
+  warning = FALSE,
+  hide = TRUE,
+  tidy.opts = list(width.cutoff = 60),
+  tidy = TRUE
+  )
+options(
+  OutDec = ",", 
+  digits = 2, 
+  knitr.table.format = "latex", 
+  xtable.comment = FALSE
+  )
 ```
+
+```{r lib}
+library(ggplot2)
+library(dplyr)
+```
+
 
 \begin{titlepage}
 	\centering
@@ -115,13 +125,12 @@ A árvore elaborada para avaliar diagnóstico em pacientes com deficiência inte
 \begin{figure}
 \centering
 % left, bottom, right, top
-\includegraphics[width=\textwidth, trim = 12mm 8mm 12mm 4mm, clip]{arvore_teoria.pdf}
+\includegraphics[width=\textwidth, trim = 12mm 8mm 8mm 4mm, clip]{arvore_teoria.pdf}
 \caption{Árvore de decisão para diagnóstico de pacientes com deficiência intelectual, tomando como exame de primeira linha a análise de cariótipo (indicado por "cariótipo" e sigla Ca), microarray (sigla Arr) ou sequenciamento completo do exoma (indicado por "exoma" e sigla Ex).}
 \label{fig:arvore_teoria}
 \end{figure}
 
 A probabilidade tomada para cada evento é o rendimento médio (Ef) de cada exame na literatura revisada. O nó terminal representa o que se gastou com todo o processo (C) e o número médio de diagnósticos que se obteria a cada 100 pacientes com aquele processo tomado (100Ef). O custo foi calculado com base no valor comercial encontrado em laboratórios brasileiros determinados por especialista. O número médio de diagnósticos a cada 100 pacientes é determinado por cada caminho na árvore e, portanto, somente é necessária sua soma simples para o cálculo da efetividade esperada para cada decisão. Em contrapartida, o custo esperado para cada decisão deve ser calculado como descrito no parágrafo anterior.
-
 
 ## Análise de sensitividade
 
@@ -129,27 +138,93 @@ A fim de avaliar a incerteza ao redor das estimativas dos parâmetros utilizadas
 
 A análise de sensitividade mais apropriada para os dados disponíveis (custos de laboratórios determinados por especialista e estimativas da efetividade dos exames na literatura) é a que consiste em variar os parâmetros do modelo (custos e efetividades do exames) de acordo com uma distribuição *a priori* determinada pela natureza do parâmetro e estimativas usadas ou opinião de especialistas \cite{briggs2000handling}. Para os custos, o mais apropriado é o uso de das distribuições LogNomal ou Gama, que têm como suporte $[0, \infty]$ \cite{briggs2000handling,gray2011applied}, e para as efetividades, é adequado o uso da distribuição Beta, que tem como suporte $[0,1]$ \cite{briggs2000handling,gray2011applied}.
 
-Para os custos, foi escolhida a distribuição Gama, cuja parametrização é $C \sim Gama(\alpha, \beta)$, em que a esperança é $\frac{\alpha}{\beta}$ e o coeficiente de variação (razão da variância sobre a esperança) é $\beta$ \cite{degroot2012probability}. MOSTRAR COMO ESSAS INFORMAÇÕES VÃO SER USADAS PARA DETERMINAR OS PARÂMETROS
+Para os custos, foi escolhida a distribuição Gama, cuja parametrização é $C \sim Gama(\alpha, \beta)$, em que a esperança é $\frac{\alpha}{\beta}$ e o coeficiente de variação (razão da variância sobre a esperança) é $\beta$ \cite{degroot2012probability}. Assim, os parâmetros para cada custo serão determinados através de seu valor esperado - consultado por especialista, e coeficiente de variação adequado - justificado pelo gráfico da distribuição gerada.
 
-A parametrização da Beta é $E \sim Beta(\alpha, \beta)$, em que os estimadores pelo método dos momentos são $\hat{\alpha} = \bar{E} \bigg(\frac{\bar{E}(1 - \bar{E})}{S_E^2} - 1\bigg)$ e $\hat{\beta} = (1-\bar{E}) \bigg(\frac{\bar{E}(1 - \bar{E})}{S_E^2} - 1\bigg)$ \cite{degroot2012probability}. DIZER QUE ESSAS ESTIMATIVAS FORAM APLICADAS SOBRE REVIEWS/ESTUDOS
+A parametrização da Beta é $E \sim Beta(\alpha, \beta)$, em que os estimadores pelo método dos momentos são $\hat{\alpha} = \bar{E} \bigg(\frac{\bar{E}(1 - \bar{E})}{S_E^2} - 1\bigg)$ e $\hat{\beta} = (1-\bar{E}) \bigg(\frac{\bar{E}(1 - \bar{E})}{S_E^2} - 1\bigg)$ \cite{degroot2012probability}. Os parâmetros serão estimados através do método dos momentos com o uso de revisão (da efetividade) dos exames na literatura, quando disponível, e do uso de diversos artigos que determinem a efetividade do exame.
 
 # Resultados
 
-Os dados obtidos estão sumarizados na tabela \ref{tab:dados}. FALAR UM POUCO SOBRE A ORIGEM DESSES DADOS.
+Os dados obtidos estão sumarizados na Tabela \ref{tab:dados}. FALAR UM POUCO SOBRE A ORIGEM DESSES DADOS.
 
-Esses dados determinam a árvore ilustrada na figura \ref{fig:arvore_dados}. Nela, está destacado a sequência de exames que tem como exame-piloto o XXXX; esta é a sequência com o menor custo-efetividade.
+\begin{table}[!h]
+\centering
+\caption{Dados utilizados na construção da árvore de decisão.}
+\label{tab:dados}
+\begin{tabular}{lllll}
+\textbf{Descrição}       & \textbf{Sigla} & \textbf{Valor} & \textbf{Fonte}      &  \\
+\hline
+Efetividade do exoma     & EfEx          & 0.23           & Ref PTC             &  \\
+Efetividade do array     & EfArr         & 0.1            & Sagoo 2009          &  \\
+Efetividade do cariótipo & EfCa          & 0.03           & Exemplo de valor!!! &  \\
+Custo do exoma           & CEx           & \$7.500,00     & Fleury              &  \\
+Custo do array           & CArr          & \$4.054,00     & Fleury              &  \\
+Custo do cariótipo       & CCa           & \$1.390,00     & Exemplo de valor!!! & 
+\end{tabular}
+\end{table}
 
-\begin{figure}
+Esses dados determinam a árvore ilustrada na Figura \ref{fig:arvore_dados}. Nela, está destacado a sequência de exames que tem como exame-piloto o XXXX; esta é a sequência com o menor custo-efetividade.
+
+\begin{figure}[!h]
 \centering
 % left, bottom, right, top
-\includegraphics[width=\textwidth, trim = 12mm 8mm 12mm 4mm, clip]{arvore_teoria.pdf}
-\caption{Árvore de decisão para diagnóstico de pacientes com deficiência intelectual, tomando como exame de primeira linha a análise de cariótipo (indicado por "cariótipo"), microarray ou sequenciamento completo do exoma (indicado por "exoma").}
+\includegraphics[width=\textwidth, trim = 12mm 8mm 12mm 4mm, clip]{arvore_dados.pdf}
+\caption{Árvore de decisão para diagnóstico de pacientes com deficiência intelectual, tomando como exame de primeira linha a análise de cariótipo (indicado por "cariótipo"), microarray ou sequenciamento completo do exoma (indicado por "exoma"). As probabilidades associadas a cada ramo estão indicadas em verde; os custos e efetividades (pacientes diagnosticados em 100) finais ao longo de um caminho estão em vermelho e azul escuro, respectivamente; a razão entre custo esperado e efetividade esperada está em azul claro. A decisão de menor custo-eftividade está contida numa caixa azul.}
 \label{fig:arvore_dados}
 \end{figure}
 
 No entanto, estes números podem não corresponder aos valores de custo e efetividade reais, às alterações futuras ou a variações específicas de uma localidade ou período. Por isso, foi realizada uma análise de sensitividade sobre a efetividade dos exames e seus custos.
 
+```{r simul}
+source("Code/simul.R")
+simul <- run_simulation()
+
+for(i in 1:length(simul)) assign(names(simul)[i], simul[[i]])
+
+rm(simul, run_simulation, i)
+```
+
+
 FALAR SOBRE OS PARAMETROS ESCOLHIDOS E MOSTRAR OS GRÁFICOS DAS DISTRIBUIÇÕES.
+
+```{r param}
+gridExtra::grid.arrange(
+  tibble(x = CCa_simul) %>% 
+  ggplot(aes(x)) + 
+  ggdistribute::stat_density_ci(ci_width = 0.95) + 
+  scale_x_continuous(labels = scales::dollar_format("R$")) + 
+  labs(title = "Cariótipo", x = "", y = "densidade estimada ") + 
+  theme_classic(), 
+  
+  tibble(x = CArr_simul) %>% 
+  ggplot(aes(x)) + 
+  ggdistribute::stat_density_ci(ci_width = 0.95) + 
+  scale_x_continuous(labels = scales::dollar_format("R$")) + 
+  labs(title = "Microarray", x = "", y = "densidade estimada ") + 
+  theme_classic(),
+  
+  tibble(x = CEx_simul) %>% 
+  ggplot(aes(x)) + 
+  ggdistribute::stat_density_ci(ci_width = 0.95) + 
+  scale_x_continuous(labels = scales::dollar_format("R$")) + 
+  labs(title = "Exoma", x = "", y = "densidade estimada ") + 
+  theme_classic(), 
+  
+  nrow = 1
+)
+```
+
+```{r ICER}
+filter(anal_sens, Exame != "Cariótipo com Array") %>% 
+  ggplot(aes(Efetiv_incr, Custo_incr, col = Exame, fill = Exame)) + 
+  stat_ellipse(geom = "polygon", alpha = 0.2) + 
+  geom_point(alpha = 0.5) + 
+  scale_y_continuous(labels = scales::dollar_format("R$")) + 
+  scale_x_continuous(labels = function(x) paste0(x, "%")) + 
+  labs(x = "Efetividade incremental", y = "Custo incremental") + 
+  theme_classic()
+```
+
+
 
 # Discussão
 
