@@ -1,7 +1,7 @@
 library(ggplot2)
 library(dplyr)
 
-## ICER
+## RCEI
 filter(anal_sens, Exame != "Cariótipo com Array") %>% 
   ggplot(aes(Efetiv_incr, Custo_incr, col = Exame, fill = Exame)) + 
   stat_ellipse(geom = "polygon", alpha = 0.3) + 
@@ -36,81 +36,81 @@ tor_exoma <- tibble(
   fator = "Efetividade do Exoma", 
   min = min(EfEx_simul), max = max(EfEx_simul), 
   
-  ICER_base = ComputeTree(
+  RCEI_base = ComputeTree(
     "Exoma", 
     param$Exoma$efetiv$base, param$Microarray$efetiv$base, param$Cariotipo$efetiv$base, 
     param$Exoma$custo$base, param$Microarray$custo$base, param$Cariotipo$custo$base
     ) %>% 
     rbind(base_cariotipo) %>% 
-    ComputeICER("Exoma", "Cariótipo com Array") %$% 
-    ICER[1],
+    ComputeRCEI("Exoma", "Cariótipo com Array") %$% 
+    RCEI[1],
   
-  ICER_min = ComputeTree(
+  RCEI_min = ComputeTree(
     "Exoma", 
     min(EfEx_simul), param$Microarray$efetiv$base, param$Cariotipo$efetiv$base, 
     param$Exoma$custo$base, param$Microarray$custo$base, param$Cariotipo$custo$base
     ) %>% 
     rbind(base_cariotipo) %>% 
-    ComputeICER("Exoma", "Cariótipo com Array") %$% 
-    ICER[1], 
+    ComputeRCEI("Exoma", "Cariótipo com Array") %$% 
+    RCEI[1], 
   
-  ICER_max = ComputeTree(
+  RCEI_max = ComputeTree(
     "Exoma", 
     max(EfEx_simul), param$Microarray$efetiv$base, param$Cariotipo$efetiv$base, 
     param$Exoma$custo$base, param$Microarray$custo$base, param$Cariotipo$custo$base
     ) %>% 
     rbind(base_cariotipo) %>% 
-    ComputeICER("Exoma", "Cariótipo com Array") %$% 
-    ICER[1],
+    ComputeRCEI("Exoma", "Cariótipo com Array") %$% 
+    RCEI[1],
 ) %>% 
   rbind(data_frame(
     fator = "Custo do Exoma", 
     min = min(CEx_simul), max = max(CEx_simul), 
     
-    ICER_base = ComputeTree(
+    RCEI_base = ComputeTree(
       "Exoma", 
       param$Exoma$efetiv$base, param$Microarray$efetiv$base, param$Cariotipo$efetiv$base, 
       param$Exoma$custo$base, param$Microarray$custo$base, param$Cariotipo$custo$base
       ) %>% 
       rbind(base_cariotipo) %>% 
-      ComputeICER("Exoma", "Cariótipo com Array") %$% 
-      ICER[1],
+      ComputeRCEI("Exoma", "Cariótipo com Array") %$% 
+      RCEI[1],
     
-    ICER_min = ComputeTree(
+    RCEI_min = ComputeTree(
       "Exoma", 
       param$Exoma$efetiv$base, param$Microarray$efetiv$base, param$Cariotipo$efetiv$base, 
       min(CEx_simul), param$Microarray$custo$base, param$Cariotipo$custo$base
       ) %>% 
       rbind(base_cariotipo) %>% 
-      ComputeICER("Exoma", "Cariótipo com Array") %$% 
-      ICER[1],
+      ComputeRCEI("Exoma", "Cariótipo com Array") %$% 
+      RCEI[1],
     
-    ICER_max = ComputeTree(
+    RCEI_max = ComputeTree(
       "Exoma", 
       param$Exoma$efetiv$base, param$Microarray$efetiv$base, param$Cariotipo$efetiv$base, 
       max(CEx_simul), param$Microarray$custo$base, param$Cariotipo$custo$base
       ) %>% 
       rbind(base_cariotipo) %>% 
-      ComputeICER("Exoma", "Cariótipo com Array") %$% 
-      ICER[1]
+      ComputeRCEI("Exoma", "Cariótipo com Array") %$% 
+      RCEI[1]
   )
   ) %$% 
   data_frame(
     fator = as.factor(rep(fator, 2)), 
     grupo = c("min", "min", "max", "max"),
     valor = c(min, max),
-    ICER_dev = c(ICER_min, ICER_max) - ICER_base, 
-    ICER_base = ICER_base[1], 
+    RCEI_dev = c(RCEI_min, RCEI_max) - RCEI_base, 
+    RCEI_base = RCEI_base[1], 
     ajuste = c(30, -30, -30, 30)
   )
-ggplot(tor_exoma, aes(x = fator, y = ICER_dev, fill = grupo)) + 
+ggplot(tor_exoma, aes(x = fator, y = RCEI_dev, fill = grupo)) + 
   geom_bar(stat = "identity", position = "identity", show.legend = FALSE) + 
   geom_text(
-    aes(y = round(ICER_dev) + ajuste, label = round(valor, 2)), 
+    aes(y = round(RCEI_dev) + ajuste, label = round(valor, 2)), 
     size = 3, vjust = 0.5
   ) +
   coord_flip() + 
   labs(
-    title = "Desvios do ICER da análise de sensitividade\ncom relação ao ICER encontrado na árvore de decisão", 
+    title = "Desvios do RCEI da análise de sensitividade\ncom relação ao RCEI encontrado na árvore de decisão", 
     x = ""
   )
