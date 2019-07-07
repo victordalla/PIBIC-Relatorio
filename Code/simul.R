@@ -70,15 +70,13 @@ param <- list(
 nrun <- 1000
 
 run_simulation <- function() {
-  
+
 ## Exoma
 REx <- c(27, 32, 41, 32.5, 27.2) / 100
-set.seed(42)
 REx_simul <- BetaParams(mean(REx), var(REx)) %$%
   rbeta(nrun, alpha, beta)
-CEx <- c(5500, 7500, 9900)
-CV_Ex <- 50
-set.seed(42)
+CEx <- 6000
+CV_Ex <- 1
 CEx_simul <- rgamma(nrun, mean(CEx) * CV_Ex, rate = CV_Ex)
 
 ## Array
@@ -87,22 +85,17 @@ RArr <- c(
   5.6, 35, 5.6, 10, 9.6, 7, 13.8, 6.9, 7.6, 6.3, 16.4, 5.3, 15.6, 7.8, 
   6.4, 18, 11.8, 17.1
   ) / 100
-set.seed(42)
 RArr_simul <- BetaParams(mean(RArr), var(RArr)) %$%
   rbeta(nrun, alpha, beta)
-CArr <- c(4054, 3000)
-CV_Arr <- 30
-set.seed(42)
+CArr <- 3500
+CV_Arr <- 1
 CArr_simul <- rgamma(nrun, mean(CArr) * CV_Arr, rate = CV_Arr)
 
 ## Cariotipo
-RCa <- c(0.01, 0.02, 0.03)
-set.seed(42)
-RCa_simul <- BetaParams(mean(RCa), var(RCa)) %$%
+RCa_simul <- BetaParams(0.03, 0.00001) %$%
   rbeta(nrun, alpha, beta)
-CCa <- c(1390, 1500)
-CV_Ca <- 20
-set.seed(42)
+CCa <- 1400
+CV_Ca <- 2
 CCa_simul <- rgamma(nrun, mean(CCa) * CV_Ca, rate = CV_Ca)
 
 ## bind data
