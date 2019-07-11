@@ -9,62 +9,61 @@ BetaParams <- function(mu, sig) {
 }
 
 ComputeTree <- function(Exame, 
-                        REx_simul, RArr_simul, RCa_simul, 
-                        CEx_simul, CArr_simul, CCa_simul) {
+                        REx, RArr, RCa, 
+                        CEx, CArr, CCa) {
     
     if (Exame == 'Cariótipo com Array') {
       return(data.frame(
-        Exame = 'Cariótipo com Array',
-        Custo_esper  = RCa_simul*CCa_simul + (CCa_simul+CArr_simul)*(1-RCa_simul)*RArr_simul, 
-        Efetiv_esper = 100*RCa_simul + 100*(1-RCa_simul)*RArr_simul
+        Exame = Exame,
+        Custo_esper  = CCa + (1-RCa)*CArr, 
+        Efetiv_esper = 100*RCa + 100*(1-RCa)*RArr
         ))
     }
-
-    else if (Exame == 'Cariótipo com Exoma') {
+    # Cariótipo com Array e Exoma
+    else if (Exame == 'Cariótipo') {
       return(data.frame(
-        Exame = 'Cariótipo com Exoma',
-        Custo_esper  = RCa_simul*CCa_simul + (CCa_simul+CArr_simul)*(1-RCa_simul)*RArr_simul + (CCa_simul+CArr_simul+CEx_simul)*(1-RCa_simul)*(1-RArr_simul), 
-        Efetiv_esper = 100*RCa_simul + 100*(1-RCa_simul)*RArr_simul + 100*(1-RCa_simul)*(1-RArr_simul)*REx_simul
+        Exame = Exame,
+        Custo_esper  = CCa + (1-RCa)*CArr + (1-RCa)*(1-RArr)*CEx, 
+        Efetiv_esper = 100*RCa + 100*(1-RCa)*RArr + 100*(1-RCa)*(1-RArr)*REx
         ))
     }
 
     else if (Exame == 'Microarray') {
       return(data.frame(
-        Exame = 'Microarray',
-        Custo_esper  = RArr_simul*CArr_simul + (CArr_simul+CEx_simul)*(1-RArr_simul), 
-        Efetiv_esper = 100*RArr_simul + 100*(1-RArr_simul)*REx_simul
+        Exame = Exame,
+        Custo_esper  = CArr + (1-RArr)*CEx, 
+        Efetiv_esper = 100*RArr + 100*(1-RArr)*REx
         ))
     }
     
     else if (Exame == 'Exoma') {
       return(data.frame(
-        Exame = 'Exoma',
-        Custo_esper  = REx_simul*CEx_simul + (CEx_simul+CArr_simul)*(1-REx_simul), 
-        Efetiv_esper = 100*REx_simul + 100*(1-REx_simul)*RArr_simul
+        Exame = Exame,
+        Custo_esper  = CEx + (1-REx)*CArr, 
+        Efetiv_esper = 100*REx + 100*(1-REx)*RArr
         ))
     }
   }
 
 ComputeRCEI <- function(df, Exame, base) {
     df$Custo_incr[df$Exame == Exame]  <- df$Custo_esper[df$Exame == Exame] - df$Custo_esper[df$Exame == base]
-    df$Efetiv_incr[df$Exame == Exame]   <- df$Efetiv_esper[df$Exame == Exame] - df$Efetiv_esper[df$Exame == base]
+    df$Efetiv_incr[df$Exame == Exame] <- df$Efetiv_esper[df$Exame == Exame] - df$Efetiv_esper[df$Exame == base]
     df$RCEI[df$Exame == Exame]        <- df$Custo_incr[df$Exame == Exame] / df$Efetiv_incr[df$Exame == Exame]
     return(df)
   }
 
-  
 param <- list(
   Exoma = list(
-    Rend = list(base = 0.27), 
-    custo  = list(base = 7500)
+    Rend = list(base = 0.32), 
+    Custo  = list(base = 6950)
     ), 
   Microarray = list(
-    Rend = list(base = 0.13), 
-    custo  = list(base = 4054)
+    Rend = list(base = 0.14), 
+    Custo  = list(base = 3490)
     ),
   Cariotipo = list(
     Rend = list(base = 0.03), 
-    custo  = list(base = 1390)
+    Custo  = list(base = 1377)
     )
   )
 nrun <- 1000
@@ -76,7 +75,7 @@ REx <- c(27, 32, 41, 32.5, 27.2) / 100
 REx_simul <- BetaParams(mean(REx), var(REx)) %$%
   rbeta(nrun, alpha, beta)
 CEx <- 6000
-CV_Ex <- 1
+CV_Ex <- 0.02
 CEx_simul <- rgamma(nrun, mean(CEx) * CV_Ex, rate = CV_Ex)
 
 ## Array
@@ -87,26 +86,21 @@ RArr <- c(
   ) / 100
 RArr_simul <- BetaParams(mean(RArr), var(RArr)) %$%
   rbeta(nrun, alpha, beta)
-CArr <- 3500
-CV_Arr <- 1
+CArr <- 3400
+CV_Arr <- 0.1
 CArr_simul <- rgamma(nrun, mean(CArr) * CV_Arr, rate = CV_Arr)
 
 ## Cariotipo
 RCa_simul <- BetaParams(0.03, 0.00001) %$%
   rbeta(nrun, alpha, beta)
 CCa <- 1400
-CV_Ca <- 2
+CV_Ca <- 0.15
 CCa_simul <- rgamma(nrun, mean(CCa) * CV_Ca, rate = CV_Ca)
 
 ## bind data
 anal_sens <- rbind(
   ComputeTree(
-    'Cariótipo com Array', 
-    REx_simul, RArr_simul, RCa_simul, 
-    CEx_simul, CArr_simul, CCa_simul
-    ), 
-  ComputeTree(
-    'Cariótipo com Exoma', 
+    'Cariótipo', 
     REx_simul, RArr_simul, RCa_simul, 
     CEx_simul, CArr_simul, CCa_simul
     ), 
@@ -119,21 +113,26 @@ anal_sens <- rbind(
     'Exoma', 
     REx_simul, RArr_simul, RCa_simul, 
     CEx_simul, CArr_simul, CCa_simul
-    )
+    ), 
+  ComputeTree(
+    'Cariótipo com Array', 
+    REx_simul, RArr_simul, RCa_simul, 
+    CEx_simul, CArr_simul, CCa_simul
+  )
   )
 anal_sens$CER <- anal_sens$Custo_esper / anal_sens$Efetiv_esper
 
 
 ## RCEI
-anal_sens %<>% ComputeRCEI('Cariótipo com Exoma', 'Cariótipo com Array') %>% 
-  ComputeRCEI('Microarray', 'Cariótipo com Array') %>%  
-  ComputeRCEI('Exoma', 'Cariótipo com Array')
+anal_sens %<>% 
+  ComputeRCEI('Microarray', 'Cariótipo') %>%  
+  ComputeRCEI('Exoma', 'Cariótipo')
 
 ## tornado data
 base_cariotipo <- ComputeTree(
-  'Cariótipo com Array', 
+  'Cariótipo', 
   param$Exoma$Rend$base, param$Microarray$Rend$base, param$Cariotipo$Rend$base, 
-  param$Exoma$custo$base, param$Microarray$custo$base, param$Cariotipo$custo$base
+  param$Exoma$Custo$base, param$Microarray$Custo$base, param$Cariotipo$Custo$base
   )
 
 list(

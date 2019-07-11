@@ -63,7 +63,7 @@ library(dplyr)
     \includegraphics[width=2.3cm]{unicamp}
   \end{minipage}
 	\vspace{2cm}
-	{\scshape\Large Relatório parcial\par}
+	{\scshape\Large Relatório final\par}
 	\vspace{1.5cm}
 	{\LARGE\bfseries Aplicação de análise de custo-efetividade para diagnósticos com exames de sequenciamento genético em deficientes intelectuais\par}
 	\vspace{2cm}
@@ -78,7 +78,9 @@ library(dplyr)
 
 
 \begin{abstract}
-As novas gerações de sequenciamento de DNA têm reduzido os custos e têm sido usadas em escala comercial. Assim, hoje elas fazem parte do rol de exames disponíveis para diagnósticos de casos clínicos apropriados. Em particular, ressaltamos o uso do sequenciamento do exoma, que tem capacidade diagnóstica alta \cite{de2013detection, stark2016prospective} e custo em constante queda \cite{metzker2010sequencing, nih2017costdna}. Entretanto, é observado uma gestão ineficente dessas tecnologias na saúde pública e privada brasileira, que ainda tem como exames de primeira linha métodos tradicionais e ineficientes  \cite{minsaude2014raras,ANS2013rol}. Tendo isso em vista, o presente estudo propõe uma análise de custo-efetividade para o diagnóstico de pacientes com deficiência intelectual, modelando o processo de diagnóstico em uma árvore de decisão. Além disso, é proposta uma análise de sensitividade nesse modelo para verificar quais fatores têm mais impacto na relação custo-efetividade.
+As novas gerações de sequenciamento de DNA têm reduzido os custos e têm sido usadas em escala comercial. Assim, hoje elas fazem parte do rol de exames disponíveis para diagnósticos de casos clínicos apropriados. Em particular, ressaltamos o uso do sequenciamento do exoma, que tem capacidade diagnóstica alta \cite{de2013detection, stark2016prospective} e custo em constante queda \cite{metzker2010sequencing, nih2017costdna}. Entretanto, é observado uma gestão ineficiente dessas tecnologias na saúde pública e privada brasileira, que ainda tem como exames de primeira linha métodos tradicionais e ineficientes  \cite{minsaude2014raras,ANS2013rol}.
+
+Tendo isso em vista, o presente estudo propõe uma análise de custo-efetividade para o diagnóstico de pacientes com deficiência intelectual indeterminada, modelando o processo de diagnóstico por uma árvore de decisão. Ela indica que a aplicação do sequenciamento do exoma, seguido da análise de microarray em caso de falha, é o mais custo-efetivo dos procedimentos avaliados. Além disso, é proposta uma análise de sensitividade nesse modelo para verificar quais fatores têm mais impacto na relação custo-efetividade. A conclusão é a de que o sequenciamento do exoma se mostra como o teste piloto com melhor custo-efetividade mesmo quando se varia seus custos e seu rendimento, sendo a custo-efetividade sensível a ambos os fatores.
 \end{abstract}
 
 # Introdução
@@ -97,9 +99,9 @@ Nos últimos anos, concomitante à ampliação do uso de testes genômicos, obse
 Tendo em vista este fenômeno, foi lançada no Brasil a Política Nacional de Gestão de Tecnologias em Saúde \cite{minsaude2008gestao} reconhecendo a necessidade de elaborar mecanismos de avaliação e regulação das inovações tecnológicas em diferentes etapas do ciclo de vida de uma tecnologia e na perspectiva da realidade brasileira. Sendo assim, os estudos de avaliação de tecnologias em saúde, dentre eles os de custo-efetividade de testes diagnósticos, tem se mostrado cruciais para subsidiar o uso apropriado das ferramentas diagnósticas disponíveis e não somente importar testes diagnósticos de países desenvolvidos sem considerar as características locais e a capacidade instalada de um país \cite{minsaude2008gestao, baltussen2003making}. Para tanto, é importante a elaboração de modelos matemáticos que incorporem as particularidades e a complexidade da assistência médica brasileira, considerando a 0 diagnóstica não somente como um produto do rendimento ou da acurácia do teste, mas considerando também o número de consultas entre o início e o final da investigação etiológica, dentre outros aspectos.
 
 No âmbito do SUS, a Política Nacional de Atenção Integral às Pessoas com
-Doenças Raras \cite{minsaude2014raras} prevê a realização de  microarranjo cromossômico (*chromosomal microarray*) para investigação etiológica de condições determinadas geneticamente. Anteriormente a ANS já havia incorporado como método complementar de diagnóstico, com diretriz de utilização \cite{ANS2013rol}, o microarranjo cromossômico para casos de atraso de desenvolvimento neuropsicomotor ou deficiência intelectual, entretanto este teste genético não foi incorporado como exame diagnóstico de primeira linha, sendo exigido o cariótipo convencional, além de outros critérios clínicos \cite{ANS2013rol}. Também é válido ressaltar que, apesar de alguns autores já sugerirem que em alguns casos o exoma deve preceder o microarranjo cromossômico como teste genético inicial \cite{de2013detection,stark2016prospective}. Mesmo assim, nem o sistema de saúde público brasileiro nem o privado consideraram a possibilidade de aplicar tal exame diagnóstico de forma sistemática.
+Doenças Raras \cite{minsaude2014raras} prevê a realização de  microarranjo cromossômico (*chromosomal microarray*) para investigação etiológica de condições determinadas geneticamente. Anteriormente a ANS já havia incorporado como método complementar de diagnóstico, com diretriz de utilização \cite{ANS2013rol}, o microarranjo cromossômico para casos de atraso de desenvolvimento neuropsicomotor ou deficiência intelectual. Entretanto, este teste genético não foi incorporado como exame diagnóstico de primeira linha, sendo exigido o cariótipo convencional, além de outros critérios clínicos \cite{ANS2013rol}. Também é válido ressaltar que, apesar de alguns autores já sugerirem que em alguns casos o exoma deve preceder o microarranjo cromossômico como teste genético inicial \cite{de2013detection,stark2016prospective}. Mesmo assim, nem o sistema de saúde público brasileiro nem o privado consideraram a possibilidade de aplicar tal exame diagnóstico de forma sistemática.
 
-Este trabalho propõe uma análise de custo-efetividade no diagnóstico de pacientes com deficiência intelectual. Para verificar a robustez da análise e como ferramenta de tomada de decisão, também foi realizada uma análise de sensitividade. A decisão é com relação a quais exames entram no rol de diagnóstico desses pacientes e qual a prioridade deles dentro do processo diagnóstico, sendo um deles tomado como o de "primeira linha", ou seja, o primeiro a ser utilizado na investigação diagnóstica. O exames considerados são: análise de cariótipo (abreviado "cariótipo"), microarranjo e sequenciamento completo do exoma (abreviado para "exoma"). Atualmente, o exame de primeira linha para esses casos é a análise de cariótipo, sendo conduzidos os exames de análise de *microarray* e sequenciamento de cariótipo caso não tenha sucesso em diagnosticar o quadro clínico.
+Este trabalho propõe uma análise de custo-efetividade no diagnóstico de pacientes com deficiência intelectual. Para verificar a robustez da análise e como ferramenta de tomada de decisão, também foi realizada uma análise de sensitividade. A decisão é com relação a quais exames entram no rol de diagnóstico desses pacientes e qual a prioridade deles dentro do processo diagnóstico, sendo um deles tomado como o de "primeira linha" (ou "exame piloto"), ou seja, o primeiro a ser utilizado na investigação diagnóstica. Os exames de primeira linha considerados são: análise de cariótipo (abreviado "cariótipo"), microarranjo e sequenciamento do exoma (abreviado para "exoma"). Atualmente, o exame de primeira linha para esses casos é a análise de cariótipo, sendo conduzidos os exames de análise de *microarray* (abreviado para "microarray") e sequenciamento de cariótipo caso não tenha sucesso em diagnosticar o quadro clínico.
 
 
 # Materiais e métodos
@@ -126,72 +128,73 @@ A árvore elaborada para avaliar diagnóstico em pacientes com deficiência inte
 \centering
 % left, bottom, right, top
 \includegraphics[width=\textwidth, trim = 12mm 8mm 8mm 4mm, clip]{arvore_teoria.pdf}
-\caption{Árvore de decisão para diagnóstico de pacientes com deficiência intelectual, tomando como exame de primeira linha a análise de cariótipo (indicado por "cariótipo" e sigla Ca), microarray (sigla Arr) ou sequenciamento completo do exoma (indicado por "exoma" e sigla Ex).}
+\caption{Árvore de decisão para diagnóstico de pacientes com deficiência intelectual, tomando como exame de primeira linha a análise de cariótipo (indicado por "cariótipo" e sigla Ca), microarray (sigla Arr) ou sequenciamento do exoma (indicado por "exoma" e sigla Ex).}
 \label{fig:arvore_teoria}
 \end{figure}
 
-A probabilidade tomada para cada evento é o rendimento médio (R) de cada exame na literatura revisada. O nó terminal representa o que se gastou com todo o processo (C) e o número médio de diagnósticos que se obteria a cada 100 pacientes com aquele processo tomado (100Ef). O custo foi calculado com base no valor comercial encontrado em laboratórios brasileiros determinados por especialista. O número médio de diagnósticos a cada 100 pacientes é determinado por cada caminho na árvore e, portanto, somente é necessária sua soma simples para o cálculo do rendimento esperada para cada decisão. Em contrapartida, o custo esperado para cada decisão deve ser calculado como descrito no parágrafo anterior.
+A probabilidade tomada para cada evento é o rendimento médio (R) de cada exame na literatura revisada. O nó terminal representa o que se gastou com todo o processo (C) e o número médio de diagnósticos que se obteria a cada 100 pacientes com aquele processo tomado (100Ef). O custo foi calculado com base no valor comercial encontrado em laboratórios brasileiros. O número médio de diagnósticos a cada 100 pacientes é determinado por cada caminho na árvore e, portanto, somente é necessária sua soma simples para o cálculo do rendimento esperada para cada decisão. Em contrapartida, o custo esperado para cada decisão deve ser calculado como descrito anteriormente.
 
 ## Análise de sensitividade
 
 A fim de avaliar a incerteza ao redor das estimativas dos parâmetros utilizadas no modelo, é recomendado realizar uma análise de sensitividade, que pode ser feita de forma determinística ou probabilística. Ela consiste em variar um ou mais parâmetros de maneira sistemática ou probabilística e, então, avaliar o modelo novamente com esses parâmetros \cite{baltussen2003making, briggs1994uncertainty, weinstein1977foundations}. Essa análise permite medir e quantificar o grau de robustez dos resultados, além de ser uma ferramenta que pode contribuir para a tomada de decisão. A análise de sensitividade probabilística é uma ferramenta mais poderosa \cite{baltussen2003making} e por isso será feita no modelo desse estudo.
 
-A análise de sensitividade mais apropriada para os dados disponíveis (custos de laboratórios determinados por especialista e estimativas do rendimento dos exames na literatura) é a que consiste em variar os parâmetros do modelo (custos e rendimentos do exames) de acordo com uma distribuição *a priori* determinada pela natureza do parâmetro e estimativas usadas ou opinião de especialistas \cite{briggs2000handling}. Para os custos $C$, o mais apropriado é o uso de das distribuições LogNomal ou Gama, que têm como suporte $[0, \infty]$ \cite{briggs2000handling,gray2011applied}, e para os rendimentos $E$, é adequado o uso da distribuição Beta, que tem como suporte $[0,1]$ \cite{briggs2000handling,gray2011applied}.
+A análise de sensitividade mais apropriada para os dados disponíveis (custos de laboratórios determinados por especialista e estimativas do rendimento dos exames na literatura) é a que consiste em variar os parâmetros do modelo (custos e rendimentos do exames) de acordo com uma distribuição *a priori* determinada pela natureza do parâmetro e estimativas usadas ou opinião de especialistas \cite{briggs2000handling}. Para os custos $C$, o mais apropriado é o uso de das distribuições LogNomal ou Gama, que têm como suporte $[0, \infty)$ \cite{briggs2000handling,gray2011applied}, e para os rendimentos $E$, é adequado o uso da distribuição Beta, que tem como suporte $[0,1]$ \cite{briggs2000handling,gray2011applied}.
 
 Para os custos, foi escolhida a distribuição Gama, cuja parametrização é $C \sim Gama(\alpha, \beta)$, em que a esperança é $\frac{\alpha}{\beta}$ e o coeficiente de variação (razão da variância sobre a esperança) é $\beta$ \cite{degroot2012probability}. Assim, os parâmetros para cada custo serão determinados através de seu valor esperado - consultado por especialista, e coeficiente de variação adequado - justificado pelo gráfico da distribuição gerada.
 
-A parametrização da Beta é $E \sim Beta(\alpha, \beta)$, em que os estimadores pelo método dos momentos são $\hat{\alpha} = \bar{E} \bigg(\frac{\bar{E}(1 - \bar{E})}{S_E^2} - 1\bigg)$ e $\hat{\beta} = (1-\bar{E}) \bigg(\frac{\bar{E}(1 - \bar{E})}{S_E^2} - 1\bigg)$ \cite{degroot2012probability}. Os parâmetros serão estimados através do método dos momentos com o uso de revisão (do rendimento) dos exames na literatura, quando disponível, e do uso de diversos artigos que determinem o rendimento do exame.
+A parametrização da Beta é $E \sim Beta(\alpha, \beta)$, em que os estimadores pelo método dos momentos são $\hat{\alpha} = \bar{E} \left(\frac{\bar{E}(1 - \bar{E})}{S_E^2} - 1\right)$ e $\hat{\beta} = (1-\bar{E}) \left(\frac{\bar{E}(1 - \bar{E})}{S_E^2} - 1\right)$ \cite{degroot2012probability}. Os parâmetros serão estimados através do método dos momentos com o uso de revisão (do rendimento) dos exames na literatura, quando disponível, e do uso de diversos artigos que determinem o rendimento do exame.
 
 # Resultados
 
-Os dados obtidos estão sumarizados na Tabela \ref{tab:dados}. FALAR UM POUCO SOBRE A ORIGEM DESSES DADOS.
+Os dados obtidos estão sumarizados na Tabela \ref{tab:dados}. Os rendimentos usados para o exoma e microarray foram as médias dos valores estimados disponíveis na literatura consultada \cite{bowling2017genomic, cherot2018using, monroe2016effectiveness, srivastava2014clinical, thevenon2016diagnostic, yang2014molecular,miller2010consensus}, que são valores mais precisos do que os valores estimados em cada um dos estudos (*cf.* Lei dos Grandes Números \cite{bernoulli1713ars,poisson1837recherches}). O rendimento do cariótipo foi determinada por opinião de especialista -- Joana Prota, doutoranda em genética na FCM (UNICAMP) e coorientadora deste estudo, e os valores dos custos baseados em consultas do Laboratório Fleury.
 
 \begin{table}[!h]
 \centering
 \caption{Dados utilizados na construção da árvore de decisão.}
 \label{tab:dados}
-\begin{tabular}{lllll}
-\textbf{Descrição}       & \textbf{Sigla} & \textbf{Valor} & \textbf{Fonte}      &  \\
+\begin{tabular}{llll}
+\textbf{Descrição}      & \textbf{Sigla}     & \textbf{Valor} & \textbf{Fonte} \\
 \hline
-Rendimento do exoma     & REx          & 0.23           & !!!!             &  \\
-Rendimento do array     & RArr         & 0.1            & !!!!          &  \\
-Rendimento do cariótipo & RCa          & 0.03           & !!!! &  \\
-Custo do exoma           & CEx           & R\$7.500,00     & Laboratório Fleury              &  \\
-Custo do array           & CArr          & R\$4.054,00     & Laboratório Fleury              &  \\
-Custo do cariótipo       & CCa           & R\$1.390,00     & !!!! & 
+Rendimento do exoma     & REx  & 0,32        & \cite{bowling2017genomic, cherot2018using, monroe2016effectiveness, srivastava2014clinical, thevenon2016diagnostic, yang2014molecular} \\
+Rendimento do array     & RArr & 0,14        & \cite{miller2010consensus} \\
+Rendimento do cariótipo & RCa  & 0,03        & Opinião de especialista \\
+Custo do exoma          & CEx  & R\$6.950,00 & Laboratório Fleury \\
+Custo do array          & CArr & R\$3.490,00 & Laboratório Fleury \\
+Custo do cariótipo      & CCa  & R\$1.377,00 & Laboratório Fleury
 \end{tabular}
 \end{table}
 
-Esses dados determinam a árvore ilustrada na Figura \ref{fig:arvore_dados}. Nela, está destacado a sequência de exames que tem como exame-piloto o XXXX; esta é a sequência com o menor custo-efetividade.
+Essas informações determinam a árvore ilustrada na Figura \ref{fig:arvore_dados}. Nela, está destacada a sequência de exames que tem como exame piloto o exoma: é a sequência com o menor custo-efetividade (R\$224,55 por diagnóstico positivo), sendo as outras R\$228,01 por diagnóstico positivo para o microarray e R\$268,63 por diagnóstico positivo para o cariótipo.
 
 \begin{figure}[!h]
 \centering
 % left, bottom, right, top
 \includegraphics[width=\textwidth, trim = 12mm 6mm 6mm 4mm, clip]{arvore_dados.pdf}
-\caption{Árvore de decisão para diagnóstico de pacientes com deficiência intelectual, tomando como exame de primeira linha a análise de cariótipo (indicado por "cariótipo"), microarray ou sequenciamento completo do exoma (indicado por "exoma"). As probabilidades associadas a cada ramo estão indicadas em verde; os custos (em reais) e rendimentos (pacientes diagnosticados em 100) finais ao longo de um caminho estão em vermelho e azul escuro, respectivamente; a razão entre custo esperado e rendimento esperado para uma decisão está em violeta. A decisão de menor custo-efetividade está contida na caixa azul claro.}
+\caption{Árvore de decisão para diagnóstico de pacientes com deficiência intelectual, tomando como exame de primeira linha a análise de cariótipo (indicado por "cariótipo"), microarray ou sequenciamento do exoma (indicado por "exoma"). As probabilidades associadas a cada ramo estão indicadas em verde; os custos (em reais) e rendimentos (pacientes diagnosticados em 100) finais ao longo de um caminho estão em vermelho e azul escuro, respectivamente; a razão entre custo esperado e rendimento esperado para uma decisão está em violeta. A decisão de menor custo-efetividade está contida na caixa azul claro.}
 \label{fig:arvore_dados}
 \end{figure}
 
-No entanto, estes números podem não corresponder aos valores de custo e rendimento reais, às alterações futuras ou a variações específicas de uma localidade ou período. Por isso, foi realizada uma análise de sensitividade sobre o rendimento dos exames e seus custos.
+No entanto, estes números podem não corresponder aos valores de custo e rendimento reais, a alterações futuras ou a variações específicas de uma localidade, período ou situação. Por isso, foi realizada uma análise de sensitividade sobre o rendimento dos exames e seus custos.
 
-Para a análise de sensitividade dos rendimentos dos exames, foram usadas revisões bibliográficas \cite{miller2010consensus} e uma série de artigos que estimam o rendimento \cite{bowling2017genomic, cherot2018using, monroe2016effectiveness, srivastava2014clinical, thevenon2016diagnostic, yang2014molecular}. Esse dados fornecem (i) uma estimativa mais fiel dos rendimentos (*cf.* Lei dos Grandes Números \cite{bernoulli1713ars,poisson1837recherches}) e (ii) como essas estimativas variam (incerteza); estas informações juntas podem ser usadas para definir os parâmetros de uma $Beta$ que captura a incerteza associada na estimação das efetivdades dos exames.
+Para a análise de sensitividade dos rendimentos dos exames, foram usadas revisões bibliográficas \cite{miller2010consensus} e uma série de artigos que estimam o rendimento \cite{bowling2017genomic, cherot2018using, monroe2016effectiveness, srivastava2014clinical, thevenon2016diagnostic, yang2014molecular}. Esses dados fornecem uma estimativa mais fiel dos rendimentos (*cf.* Lei dos Grandes Números \cite{bernoulli1713ars,poisson1837recherches}) e aproximações para as distribuições dessas estimativas. Estas informações juntas podem ser usadas para definir os parâmetros de uma $Beta$ que captura a incerteza associada na estimação dos rendimentos dos exames.
 
-Para a análse de sensitividade dos custos, a opinião de uma especilista - Joana Prota, doutoranda em genética na FCM (UNICAMP) e coorientadora deste estudo - foi tomada para determinar quais parâmetros melhor descrevem a realidade, segundo sua experiência. Esse procedimento foi realizado de modo iterativo: foram determinados valores iniciais razoáveis para os paramêtros da $Gama$ através da inspeção de preços em clínicas laboratoriais; então, foi apresentado à especialista gráficos como os da Figura \ref{fig:hdigama}, que apresenta em azul o intervalo de maior densidade (IMD) de $90\%$ - ou seja, a região da distribuição que soma uma probabilidade de $0.90$\footnote{O IMD é, no geral, mais adequado que intervalos de confiança clássicos - que supõem simetria da distribuição, visto que conseguem concentrar mais dados num intervalo menor, e, portanto, expressam melhor a região que mais concentra dados (90\% no caso dos custos e rendimentos).}; então, a especialista informava se era razoável dizer que, segundo sua experiência, $90\%$ dos custos se concentram nesse IMD. Os parâmetros usados na análise estão sumarizados na Tabela \ref{tab:analsent}. A Figura \ref{fig:hdigama} apresenta as densidades estimadas e seus respectivos IMDs a partir das simulações para cada custo, após a determinação dos parâmetros das distribuições.
+Para a análse de sensitividade dos custos, a opinião de uma especilista (Joana Prota) foi tomada para determinar quais parâmetros melhor descrevem a realidade, segundo sua experiência. Para tanto, a especialista forneceu um intervalo no qual acredita que esses valores estão mais concentrados. Os parâmetros usados na análise estão sumarizados na Tabela \ref{tab:analsent}. 
+<!-- A Figura \ref{fig:hdigama} apresenta as densidades estimadas e seus respectivos intervalos de maior densidade (IMD\footnote{O IMD é, no geral, mais adequado que intervalos de confiança clássicos - que supõem simetria da distribuição, visto que conseguem concentrar mais dados num intervalo menor, e, portanto, expressam melhor a região que mais concentra dados (90\% no caso dos custos e rendimentos).}) a partir das simulações para cada custo, após a determinação dos parâmetros das distribuições. -->
 
 \begin{table}[]
 \centering
 \caption{Distribuições, parâmetros utilizados na análise de sensitividade e suas referências.}
 \label{tab:analsent}
 \resizebox{\textwidth}{!}{\begin{tabular}{llllll}
-\textbf{Componente}      & \textbf{Distribuição} & \textbf{Valor central} & \textbf{Range!!!!} & \textbf{Parâmetros ($\alpha, \beta$)} & \textbf{Referência}     \\
+\textbf{Fator}     & \textbf{Distribuição} & \textbf{Valor central} & \textbf{Intervalo} & \textbf{Parâmetros ($\alpha, \beta$)} & \textbf{Referência}     \\
 \hline
 
 Rendimento do exoma      & Beta & 0,32 & - & 21; 45 & \cite{bowling2017genomic, cherot2018using, monroe2016effectiveness, srivastava2014clinical, thevenon2016diagnostic, yang2014molecular} \\
 Rendimento do array      & Beta & 0,14 & - & 1,6; 9,9 & \cite{miller2010consensus} \\
-Rendimento do cariótipo  & Beta & 0.03 & - & 87; 2822 & Opinião de especialista \\
-Custo do exoma           & Gama & 2500 & [800; 5000] & 0, 0 & Opinião de especialista \\
-Custo do array           & Gama & 800  & [800, 2400] & 0, 0 & Opinião de especialista \\
-Custo do cariótipo       & Gama & 1390 & [1390, 1500] & 0, 0 & Opinião de especialista
+Rendimento do cariótipo  & Beta & 0,03 & - & 87; 2822 & Opinião de especialista \\
+Custo do exoma           & Gama & 6000 & [5000; 7000] & 120; 0,02 & Opinião de especialista \\
+Custo do array           & Gama & 3400  & [3000, 4000] & 340; 0,1 & Opinião de especialista \\
+Custo do cariótipo       & Gama & 1400 & [1200, 1600] & 140; 0,15 & Opinião de especialista
 \end{tabular}}
 \end{table}
 
@@ -204,46 +207,37 @@ for(i in 1:length(simul)) assign(names(simul)[i], simul[[i]])
 rm(simul, run_simulation, i)
 ```
 
-
-```{r param, fig.cap="\\label{fig:hdigama}Densidades estimadas, seus respectivos IMDs (em azul escuro) e medianas (linha vertical) a partir das simulações para cada custo, após a determinação dos parâmetros das distribuições.", fig.pos="H"}
-
-rbind(
-  tibble(x = CCa_simul, Exame = "Cariótipo"), 
-  tibble(x = CArr_simul, Exame = "Microarray"), 
-  tibble(x = CEx_simul, Exame = "Exoma")
-  ) %>% 
-  ggplot(aes(x)) + 
-  ggdistribute::geom_posterior(draw_sd = FALSE) + 
-  scale_x_continuous(labels = scales::dollar_format(prefix = "R$")) + 
-  labs(title = "", x = "", y = "densidade estimada ") + 
-  theme_classic() + 
-  theme(axis.text.x = element_text(angle = 30, hjust = 1)) + 
-  facet_wrap(~Exame, scales = "free_x", nrow = 2, shrink = TRUE)
-```
-
-FALAR SOBRE OS RESULTADOS DA ANÁLISE DE SENSITIVIDADE.
-
-```{r RCEI, fig.cap="\\label{fig:RCEI}A", fig.pos="H"}
-filter(anal_sens, Exame != "Cariótipo com Array") %>% 
+```{r RCEI, fig.cap="\\label{fig:RCEI}Gráfico de dispersão para os custos e efetividades incrementais resultantes da simulação do uso de análise de microarray e sequenciamente do exoma como teste de primeira linha em comparação com o uso de análise de cariótipo. Há um elipse de confiança para cada exame \\cite{fox2015applied}.", fig.pos="H"}
+filter(anal_sens, !(Exame %in% c("Cariótipo", "Cariótipo com Array"))) %>% 
   ggplot(aes(Efetiv_incr, Custo_incr, col = Exame, fill = Exame)) + 
   geom_point(alpha = 0.3) + 
   stat_ellipse(geom = "polygon", alpha = 0.2) + 
   scale_y_continuous(labels = scales::dollar_format(prefix = "R$")) + 
   scale_x_continuous(labels = function(x) paste0(x, "%")) + 
-  scale_color_manual(values = c("#bc5090", "#ffa600", "#003f5c")) + 
-  scale_fill_manual(values = c("#bc5090", "#ffa600", "#003f5c")) + 
+  scale_color_manual(values = c("#ffa600", "#003f5c")) + 
+  scale_fill_manual(values = c("#ffa600", "#003f5c")) + 
   labs(x = "Efetividade incremental", y = "Custo incremental") + 
   theme_classic()
 ```
 
+A análise de sensitividade foi realizado através da linguagem de programação estatística R \cite{r} (*c.f.* Apêndice). Deste modo, foram gerados 1000 valores dos rendimentos e custos segundo suas distribuições (Tabela \ref{tab:analsent}). A Figura \ref{fig:RCEI} sumariza esses resultados. Ela apresenta um gráfico de dispersão para os custos e efetividades incrementais do uso de análise do microarray e sequenciamento exoma como testes de primeira linha em comparação com o uso da análise de cariótipo (que é o procedimento padrão realizado atualmente).
+
+É possível perceber através da Figura \ref{fig:RCEI} que o uso do microarray e exoma como exames pilotos tem potencial de alta redução dos custos (entre R\$1.000 e R\$2.000), com uma pequena redução da efetivdade (entre 1,5\% e 2\%), visto que para essas duas estratégias a análise de cariótipo não entra no rol de exames. Além disso, o exoma se mostra como o teste piloto mais vantajoso, pois, obteve em 74\% da simulação uma redução de custo maior ou igual que o microarray como teste piloto, e em 83\% um decrésimo na efetividade menor ou igual ao do microarray.
+
+Outra observação que se pode tomar através da Figura \ref{fig:RCEI} é que para a análise de microarray o RCEI é muito mais sensível ao seu rendimento que ao seu custo, o que é indicado pelo formato "achatado" de sua elipse de confiança. Já paro o sequenciamento do exoma, o RCEI é sensível a ambos de maneira similar.
+
 
 # Discussão
 
+A árvore de decisão construída leva a acreditar que a aplicação do sequenciamento do exoma seguida de uma análise de microarray em caso de falha de disgnóstico é mais custo-efetiva que o contrário (análise de microarray antes do sequenciamento do exoma) ou a realização da análise de cariótipo seguida da análise de microarray e sequenciamento do exoma. A Análise de sensitividade reforçou essa conclusão. Ela tabém indica que o custo-efetividade incremental (em relação ao uso de análise de cariótipo) é sensível a ambos o custo e rendimento do exame. Como é esperado que os custos para o sequencialmento do exoma diminua (*c.f.* Figura \ref{fig:custo}), é esperado, portanto, que o custo-efetividade incremental seja cada vez menor, sendo o sequenciamento do exoma cada vez mais vantajoso em comparação com o uso da análise de cariótipo como exame piloto.
+
 \clearpage
+\bibliographystyle{plain}
+\bibliography{ref}
 
-\appendix
+# Apêndice {-}
 
-```{r}
+```{r, echo=TRUE, eval=FALSE}
 library(magrittr)
 library(tibble)
 
@@ -255,76 +249,71 @@ BetaParams <- function(mu, sig) {
 }
 
 ComputeTree <- function(Exame, 
-                        REx_simul, RArr_simul, RCa_simul, 
-                        CEx_simul, CArr_simul, CCa_simul) {
+                        REx, RArr, RCa, 
+                        CEx, CArr, CCa) {
     
     if (Exame == 'Cariótipo com Array') {
       return(data.frame(
-        Exame = 'Cariótipo com Array',
-        Custo_esper  = RCa_simul*CCa_simul + (CCa_simul+CArr_simul)*(1-RCa_simul)*RArr_simul, 
-        Efetiv_esper = 100*RCa_simul + 100*(1-RCa_simul)*RArr_simul
+        Exame = Exame,
+        Custo_esper  = CCa + (1-RCa)*CArr, 
+        Efetiv_esper = 100*RCa + 100*(1-RCa)*RArr
         ))
     }
-
-    else if (Exame == 'Cariótipo com Exoma') {
+    # Cariótipo com Array e Exoma
+    else if (Exame == 'Cariótipo') {
       return(data.frame(
-        Exame = 'Cariótipo com Exoma',
-        Custo_esper  = RCa_simul*CCa_simul + (CCa_simul+CArr_simul)*(1-RCa_simul)*RArr_simul + (CCa_simul+CArr_simul+CEx_simul)*(1-RCa_simul)*(1-RArr_simul), 
-        Efetiv_esper = 100*RCa_simul + 100*(1-RCa_simul)*RArr_simul + 100*(1-RCa_simul)*(1-RArr_simul)*REx_simul
+        Exame = Exame,
+        Custo_esper  = CCa + (1-RCa)*CArr + (1-RCa)*(1-RArr)*CEx, 
+        Efetiv_esper = 100*RCa + 100*(1-RCa)*RArr + 100*(1-RCa)*(1-RArr)*REx
         ))
     }
 
     else if (Exame == 'Microarray') {
       return(data.frame(
-        Exame = 'Microarray',
-        Custo_esper  = RArr_simul*CArr_simul + (CArr_simul+CEx_simul)*(1-RArr_simul), 
-        Efetiv_esper = 100*RArr_simul + 100*(1-RArr_simul)*REx_simul
+        Exame = Exame,
+        Custo_esper  = CArr + (1-RArr)*CEx, 
+        Efetiv_esper = 100*RArr + 100*(1-RArr)*REx
         ))
     }
     
     else if (Exame == 'Exoma') {
       return(data.frame(
-        Exame = 'Exoma',
-        Custo_esper  = REx_simul*CEx_simul + (CEx_simul+CArr_simul)*(1-REx_simul), 
-        Efetiv_esper = 100*REx_simul + 100*(1-REx_simul)*RArr_simul
+        Exame = Exame,
+        Custo_esper  = CEx + (1-REx)*CArr, 
+        Efetiv_esper = 100*REx + 100*(1-REx)*RArr
         ))
     }
   }
 
 ComputeRCEI <- function(df, Exame, base) {
     df$Custo_incr[df$Exame == Exame]  <- df$Custo_esper[df$Exame == Exame] - df$Custo_esper[df$Exame == base]
-    df$Efetiv_incr[df$Exame == Exame]   <- df$Efetiv_esper[df$Exame == Exame] - df$Efetiv_esper[df$Exame == base]
+    df$Efetiv_incr[df$Exame == Exame] <- df$Efetiv_esper[df$Exame == Exame] - df$Efetiv_esper[df$Exame == base]
     df$RCEI[df$Exame == Exame]        <- df$Custo_incr[df$Exame == Exame] / df$Efetiv_incr[df$Exame == Exame]
     return(df)
   }
 
-  
 param <- list(
   Exoma = list(
-    Rend = list(base = 0.27), 
-    custo  = list(base = 7500)
+    Rend = list(base = 0.32), 
+    Custo  = list(base = 6950)
     ), 
   Microarray = list(
-    Rend = list(base = 0.13), 
-    custo  = list(base = 4054)
+    Rend = list(base = 0.14), 
+    Custo  = list(base = 3490)
     ),
   Cariotipo = list(
     Rend = list(base = 0.03), 
-    custo  = list(base = 1390)
+    Custo  = list(base = 1377)
     )
   )
-nrun <- 1000
 
-run_simulation <- function() {
-  
+nrun <- 1000
 ## Exoma
 REx <- c(27, 32, 41, 32.5, 27.2) / 100
-set.seed(42)
 REx_simul <- BetaParams(mean(REx), var(REx)) %$%
   rbeta(nrun, alpha, beta)
-CEx <- c(5500, 7500, 9900)
-CV_Ex <- 50
-set.seed(42)
+CEx <- 6000
+CV_Ex <- 0.02
 CEx_simul <- rgamma(nrun, mean(CEx) * CV_Ex, rate = CV_Ex)
 
 ## Array
@@ -333,33 +322,23 @@ RArr <- c(
   5.6, 35, 5.6, 10, 9.6, 7, 13.8, 6.9, 7.6, 6.3, 16.4, 5.3, 15.6, 7.8, 
   6.4, 18, 11.8, 17.1
   ) / 100
-set.seed(42)
 RArr_simul <- BetaParams(mean(RArr), var(RArr)) %$%
   rbeta(nrun, alpha, beta)
-CArr <- c(4054, 3000)
-CV_Arr <- 30
-set.seed(42)
+CArr <- 3400
+CV_Arr <- 0.1
 CArr_simul <- rgamma(nrun, mean(CArr) * CV_Arr, rate = CV_Arr)
 
 ## Cariotipo
-RCa <- c(0.01, 0.02, 0.03)
-set.seed(42)
-RCa_simul <- BetaParams(mean(RCa), var(RCa)) %$%
+RCa_simul <- BetaParams(0.03, 0.00001) %$%
   rbeta(nrun, alpha, beta)
-CCa <- c(1390, 1500)
-CV_Ca <- 20
-set.seed(42)
+CCa <- 1400
+CV_Ca <- 0.15
 CCa_simul <- rgamma(nrun, mean(CCa) * CV_Ca, rate = CV_Ca)
 
 ## bind data
 anal_sens <- rbind(
   ComputeTree(
-    'Cariótipo com Array', 
-    REx_simul, RArr_simul, RCa_simul, 
-    CEx_simul, CArr_simul, CCa_simul
-    ), 
-  ComputeTree(
-    'Cariótipo com Exoma', 
+    'Cariótipo', 
     REx_simul, RArr_simul, RCa_simul, 
     CEx_simul, CArr_simul, CCa_simul
     ), 
@@ -372,21 +351,26 @@ anal_sens <- rbind(
     'Exoma', 
     REx_simul, RArr_simul, RCa_simul, 
     CEx_simul, CArr_simul, CCa_simul
-    )
+    ), 
+  ComputeTree(
+    'Cariótipo com Array', 
+    REx_simul, RArr_simul, RCa_simul, 
+    CEx_simul, CArr_simul, CCa_simul
+  )
   )
 anal_sens$CER <- anal_sens$Custo_esper / anal_sens$Efetiv_esper
 
 
 ## RCEI
-anal_sens %<>% ComputeRCEI('Cariótipo com Exoma', 'Cariótipo com Array') %>% 
-  ComputeRCEI('Microarray', 'Cariótipo com Array') %>%  
-  ComputeRCEI('Exoma', 'Cariótipo com Array')
+anal_sens %<>% 
+  ComputeRCEI('Microarray', 'Cariótipo') %>%  
+  ComputeRCEI('Exoma', 'Cariótipo')
 
 ## tornado data
 base_cariotipo <- ComputeTree(
-  'Cariótipo com Array', 
+  'Cariótipo', 
   param$Exoma$Rend$base, param$Microarray$Rend$base, param$Cariotipo$Rend$base, 
-  param$Exoma$custo$base, param$Microarray$custo$base, param$Cariotipo$custo$base
+  param$Exoma$Custo$base, param$Microarray$Custo$base, param$Cariotipo$Custo$base
   )
 
 list(
@@ -396,9 +380,4 @@ list(
   RArr_simul = RArr_simul, CArr_simul = CArr_simul, 
   RCa_simul  = RCa_simul, CCa_simul   = CCa_simul
 )
-}
 ```
-
-
-\bibliographystyle{plain}
-\bibliography{ref}
