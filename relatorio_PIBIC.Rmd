@@ -80,7 +80,7 @@ library(dplyr)
 \begin{abstract}
 As novas gerações de sequenciamento de DNA têm reduzido os custos e têm sido usadas em escala comercial. Assim, hoje elas fazem parte do rol de exames disponíveis para diagnósticos de casos clínicos apropriados. Em particular, ressaltamos o uso do sequenciamento do exoma, que tem capacidade diagnóstica alta \cite{de2013detection, stark2016prospective} e custo em constante queda \cite{metzker2010sequencing, nih2017costdna}. Entretanto, é observado uma gestão ineficiente dessas tecnologias na saúde pública e privada brasileira, que ainda tem como exames de primeira linha métodos tradicionais e ineficientes  \cite{minsaude2014raras,ANS2013rol}.
 
-Tendo isso em vista, o presente estudo propõe uma análise de custo-efetividade para o diagnóstico de pacientes com deficiência intelectual indeterminada, modelando o processo de diagnóstico por uma árvore de decisão. Ela indica que a aplicação do sequenciamento do exoma, seguido da análise de microarray em caso de falha, é o mais custo-efetivo dos procedimentos avaliados. Além disso, é proposta uma análise de sensitividade nesse modelo para verificar quais fatores têm mais impacto na relação custo-efetividade. A conclusão é a de que o sequenciamento do exoma se mostra como o teste piloto com melhor custo-efetividade mesmo quando se varia seus custos e seu rendimento, sendo a custo-efetividade sensível a ambos os fatores.
+Tendo isso em vista, o presente estudo propõe uma análise de custo-efetividade para o diagnóstico de pacientes com deficiência intelectual indeterminada, modelando o processo de diagnóstico por uma árvore de decisão. Ela indica que a aplicação do sequenciamento do exoma, seguido da análise de microarray em caso de falha, é o mais custo-efetivo dos procedimentos avaliados. Além disso, é proposta uma análise de sensitividade nesse modelo para verificar quais fatores têm mais impacto na relação custo-efetividade. A conclusão é a de que o sequenciamento do exoma se mostra como o teste piloto com melhor custo-efetividade mesmo quando se varia seus custos e seu rendimento, sendo o custo-efetividade sensível a ambos os fatores.
 \end{abstract}
 
 # Introdução
@@ -96,10 +96,10 @@ Desde 2005, com o surgimento de novas gerações de plataformas de sequenciament
 
 Nos últimos anos, concomitante à ampliação do uso de testes genômicos, observou-se um aumento crescente dos gastos em saúde, tanto no SUS quanto na saúde suplementar \cite{minsaude2008avecon}. Esta oneração do setor deve-se não somente à inovação tecnológica, mas também ao uso irracional das novas tecnologias. Além do que, é preciso considerar uma particularidade do mercado em saúde que é a sobreposição de diferentes tecnologias, ao contrário do que ocorre em outros cenários em que as tecnologias novas substituem as antigas. Na medicina, particularmente na área da genética médica, testes mais novos, mais amplos e com maior resolução surgem para agregar a investigação sem retirar do mercado testes genéticos mais antigos.
 
-Tendo em vista este fenômeno, foi lançada no Brasil a Política Nacional de Gestão de Tecnologias em Saúde \cite{minsaude2008gestao} reconhecendo a necessidade de elaborar mecanismos de avaliação e regulação das inovações tecnológicas em diferentes etapas do ciclo de vida de uma tecnologia e na perspectiva da realidade brasileira. Sendo assim, os estudos de avaliação de tecnologias em saúde, dentre eles os de custo-efetividade de testes diagnósticos, tem se mostrado cruciais para subsidiar o uso apropriado das ferramentas diagnósticas disponíveis e não somente importar testes diagnósticos de países desenvolvidos sem considerar as características locais e a capacidade instalada de um país \cite{minsaude2008gestao, baltussen2003making}. Para tanto, é importante a elaboração de modelos matemáticos que incorporem as particularidades e a complexidade da assistência médica brasileira, considerando a 0 diagnóstica não somente como um produto do rendimento ou da acurácia do teste, mas considerando também o número de consultas entre o início e o final da investigação etiológica, dentre outros aspectos.
+Tendo em vista este fenômeno, foi lançada no Brasil a Política Nacional de Gestão de Tecnologias em Saúde \cite{minsaude2008gestao} reconhecendo a necessidade de elaborar mecanismos de avaliação e regulação das inovações tecnológicas em diferentes etapas do ciclo de vida de uma tecnologia e na perspectiva da realidade brasileira. Sendo assim, os estudos de avaliação de tecnologias em saúde, dentre eles os de custo-efetividade de testes diagnósticos, têm se mostrado cruciais para subsidiar o uso apropriado das ferramentas diagnósticas disponíveis e não somente importar testes diagnósticos de países desenvolvidos sem considerar as características locais e a capacidade instalada de um país \cite{minsaude2008gestao, baltussen2003making}. Para tanto, é importante a elaboração de modelos matemáticos que incorporem as particularidades e a complexidade da assistência médica brasileira, considerando a capacidade diagnóstica não somente como um produto do rendimento ou da acurácia do teste, mas considerando também o número de consultas entre o início e o final da investigação etiológica, dentre outros aspectos.
 
 No âmbito do SUS, a Política Nacional de Atenção Integral às Pessoas com
-Doenças Raras \cite{minsaude2014raras} prevê a realização de  microarranjo cromossômico (*chromosomal microarray*) para investigação etiológica de condições determinadas geneticamente. Anteriormente a ANS já havia incorporado como método complementar de diagnóstico, com diretriz de utilização \cite{ANS2013rol}, o microarranjo cromossômico para casos de atraso de desenvolvimento neuropsicomotor ou deficiência intelectual. Entretanto, este teste genético não foi incorporado como exame diagnóstico de primeira linha, sendo exigido o cariótipo convencional, além de outros critérios clínicos \cite{ANS2013rol}. Também é válido ressaltar que, apesar de alguns autores já sugerirem que em alguns casos o exoma deve preceder o microarranjo cromossômico como teste genético inicial \cite{de2013detection,stark2016prospective}. Mesmo assim, nem o sistema de saúde público brasileiro nem o privado consideraram a possibilidade de aplicar tal exame diagnóstico de forma sistemática.
+Doenças Raras \cite{minsaude2014raras} prevê a realização de  microarranjo cromossômico (*chromosomal microarray*) para investigação etiológica de condições determinadas geneticamente. Anteriormente, a ANS já havia incorporado como método complementar de diagnóstico, com diretriz de utilização \cite{ANS2013rol}, o microarranjo cromossômico para casos de atraso de desenvolvimento neuropsicomotor ou deficiência intelectual. Entretanto, este teste genético não foi incorporado como exame diagnóstico de primeira linha, sendo exigido o cariótipo convencional, além de outros critérios clínicos \cite{ANS2013rol}. Também é válido ressaltar que, apesar de alguns autores já sugerirem que em alguns casos o exoma deve preceder o microarranjo cromossômico como teste genético inicial \cite{de2013detection,stark2016prospective}. Mesmo assim, nem o sistema de saúde público brasileiro nem o privado consideraram a possibilidade de aplicar tal exame diagnóstico de forma sistemática.
 
 Este trabalho propõe uma análise de custo-efetividade no diagnóstico de pacientes com deficiência intelectual. Para verificar a robustez da análise e como ferramenta de tomada de decisão, também foi realizada uma análise de sensitividade. A decisão é com relação a quais exames entram no rol de diagnóstico desses pacientes e qual a prioridade deles dentro do processo diagnóstico, sendo um deles tomado como o de "primeira linha" (ou "exame piloto"), ou seja, o primeiro a ser utilizado na investigação diagnóstica. Os exames de primeira linha considerados são: análise de cariótipo (abreviado "cariótipo"), microarranjo e sequenciamento do exoma (abreviado para "exoma"). Atualmente, o exame de primeira linha para esses casos é a análise de cariótipo, sendo conduzidos os exames de análise de *microarray* (abreviado para "microarray") e sequenciamento de cariótipo caso não tenha sucesso em diagnosticar o quadro clínico.
 
@@ -110,7 +110,7 @@ Este estudo tem como objetivo principal elaborar modelos matemáticos de custo-e
 
 Na análise de custo-efetividade, dados provenientes de diversas fontes, como dados primários, revisões sistemáticas e estudos de custos, podem ser integrados em modelos como árvores de decisão, coortes simuladas de Markov, microssimulação no nível de pacientes ou simulação de eventos discretos, a fim de oferecer estimativas mais robustas das reais relações de custo-efetividade existentes e do grau de incerteza dos valores obtidos \cite{briggs2006decision, drummond2015methods, gray2011applied, silva2003avaliaccao, soarez2014modelos}.
 
-As diferentes estratégias são comparadas entre si através da razão custo-efetividade incremental (RCEI) ou do inglês *Incremental Cost Rfectiveness Ratio* (ICER). A RCEI é definida como a razão entre a diferença de custos das duas estratégias em comparação (custo incremental) e a diferença de rendimento (rendimento incremental) \cite{minsaude2008avaliacao,SECOLI2010}. O custo é medido em unidades monetárias e o rendimento é medido em unidades clínicas, que nesse caso é o preço comercial do exame e número médio de casos diagnosticados pelo exame a cada 100 pacientes com deficiência intelectual, respectivamente. Desse modo, o resultado é expresso em termos do custo por unidade clínica \cite{gray2011applied}.
+As diferentes estratégias são comparadas entre si através da razão custo-efetividade incremental (RCEI) ou do inglês *Incremental Cost Effectiveness Ratio* (ICER). A RCEI é definida como a razão entre a diferença de custos das duas estratégias comparadas ($C_0$ e $C_1$, onde $C_1 - C_0$ é o custo incremental) e a diferença de efetividade ($E_0$ e $E_1$, onde $E_1 - R_0$ é a efetividade incremental) : $\text{ICER} = \frac{()}{()}$ \cite{minsaude2008avaliacao,SECOLI2010}. O custo é medido em unidades monetárias e a efetividade é medido em unidades clínicas, que nesse caso é o preço comercial do exame e número médio de casos diagnosticados pelo exame a cada 100 pacientes com deficiência intelectual, respectivamente. Desse modo, o resultado é expresso em termos do custo por unidade clínica \cite{gray2011applied}.
 
 
 ## Árvores de decisão
@@ -118,13 +118,17 @@ As diferentes estratégias são comparadas entre si através da razão custo-efe
 Para análise de custo-efetividade em estratégias diagnósticas com testes
 genéticos, é mais adequado utilizar modelos de árvores de decisão. Isso porque o diagnóstico é um processo de curta duração sem altos níveis de interação entre pacientes ou entre pacientes e procedimentos, sem repetições ou depedência temporal. Além disso, possui alta interpretabilidade, transparência e apresenta explicitamente no modelo as alternativas consideradas \cite{petrou2011economic,barton2004modelling,brennan2006taxonomy}.
 
-###################### explicar melhor árvore de decisão
+\begin{figure}
+\centering
+% left, bottom, right, top
+\includegraphics[width=0.6\textwidth]{arvore_exemplo.pdf}
+\caption{Esquematização de uma árvore de decisão: o primeiro nó da árvore de decisão é um quadrado com as decisões disponíveis. Escolhida uma decisão, dois eventos (mutuamente exclusivos e exaustivos) decorrem dessa decisão. Eles emanam de um nó (círculo) com suas respectivas probabilidades de ocorrência. Cada sequência de decisões e eventos possíveis terminam em um nó (triângulo) que associa um custo e uma efetividade àquela sequência.}
+\label{fig:arvore_exemplo}
+\end{figure}
 
-Numa árvore de decisão, todos os possíveis desfechos são determinados por cada decisão disponível (exames), que serão avaliados em termos de seus respectivos custos e rendimentos. O primeiro nó da árvore de decisão é um quadrado com as decisões disponíveis. Uma vez escolhida uma decisão, temos eventos (mutuamente exclusivos e exaustivos) que decorrem dessa decisão ou mais decisões a serem tomadas. Eventos emanam de um nó (círculo) com suas respectivas probabilidades estimadas. Eventos também podem desencadear outros eventos ou decisões e por isso podem haver mais nós "quadrados" ou "círculo". Cada sequência de decisões e eventos possíveis terminam em um nó (triângulo) que associa um custo e um rendimento àquela sequência.
+Numa árvore de decisão (*c.f.* Figura \ref{fig:arvore_exemplo}), todos os possíveis desfechos são determinados por cada decisão disponível (exames), que serão avaliados em termos de seus respectivos custos e rendimentos. O primeiro nó da árvore de decisão é um quadrado com as decisões disponíveis. Uma vez escolhida uma decisão, há eventos (mutuamente exclusivos e exaustivos) ou mais decisões a serem tomadas que decorrem dessa decisão. Eventos emanam de um nó (círculo) com suas respectivas probabilidades estimadas. Eventos também podem desencadear outros eventos ou decisões e por isso podem haver mais nós "quadrados" ou "círculo". Cada sequência de decisões e eventos possíveis terminam em um nó (triângulo) que associa um custo e uma efetividade àquela sequência.
 
 A ideia por traz da árvore de decisão é estimar o custo-efetividade esperado de cada decisão, usando de maneira intuitiva e sistemática o Teorema da Esperança Total: $\mathbb E(X) = \mathbb E(\mathbb E(X|Y))$. Para isso, realiza-se um procedimento que começa do último nível (nós "triângulo") ao primeiro (nó "quadrado"). O último nível já deve ter associado em cada nó seus respectivos custos e rendimentos; para o próximo nível, em cada nó é associado um custo e uma rendimento que é a média dos custos e rendimentos dos nós que emanam dele, ponderada pela probabilidade de se chegar a esses nós a partir dele. Esse procedimento se repete nível a nível até o primeiro. Assim, é obtido os custos e rendimentos esperados ao se tomar cada decisão \cite{gray2011applied}.
-
-######################
 
 A árvore elaborada para avaliar diagnóstico em pacientes com deficiência intelectual está esquematizada na Figura \ref{fig:arvore_teoria}. Nela, o primeiro nó é um nó de decisão, cujas possibilidades são: "cariótipo" (Ca), "microarray" (Arr), "exoma" (Ex). Avaliar o custo-efetividade de cada possibilidade é o objetivo deste trabalho. Cada possibilidade de exame tem como consequência um de dois eventos: ou o exame tomado foi capaz de diagnosticar o paciente, ou ele não foi e, nesse caso, um outro exame dentro do rol de procedimentos é realizado buscando o diagnóstico.
 
@@ -140,15 +144,13 @@ A probabilidade tomada para cada evento é o rendimento médio (R) de cada exame
 
 ## Análise de sensitividade
 
-A fim de avaliar a incerteza ao redor das estimativas dos parâmetros utilizadas no modelo, é recomendado realizar uma análise de sensitividade, que pode ser feita de forma determinística ou probabilística. Ela consiste em variar um ou mais parâmetros de maneira sistemática ou probabilística e, então, avaliar o modelo novamente com esses parâmetros \cite{baltussen2003making, briggs1994uncertainty, weinstein1977foundations}. Essa análise permite medir e quantificar o grau de robustez dos resultados, além de ser uma ferramenta que pode contribuir para a tomada de decisão. A análise de sensitividade probabilística é uma ferramenta mais poderosa \cite{baltussen2003making} e por isso será feita no modelo desse estudo.
+A fim de avaliar a incerteza ao redor das estimativas dos parâmetros utilizados no modelo (custos e rendimentos dos exames, neste caso), é recomendado realizar uma análise de sensitividade, que pode ser feita de forma determinística ou probabilística. Ela consiste em variar um ou mais parâmetros de maneira sistemática ou probabilística e, então, avaliar o modelo novamente com esses parâmetros \cite{baltussen2003making, briggs1994uncertainty, weinstein1977foundations}. Essa análise permite medir e quantificar o grau de robustez dos resultados, além de ser uma ferramenta que pode contribuir para a tomada de decisão. A análise de sensitividade probabilística é uma ferramenta mais poderosa \cite{baltussen2003making} e por isso será feita no modelo desse estudo.
 
-A análise de sensitividade mais apropriada para os dados disponíveis (custos de laboratórios determinados por especialista e estimativas do rendimento dos exames na literatura) é a que consiste em variar os parâmetros do modelo (custos e rendimentos do exames) de acordo com uma distribuição *a priori* determinada pela natureza do parâmetro e estimativas usadas ou opinião de especialistas \cite{briggs2000handling}. Para os custos $C$, o mais apropriado é o uso de das distribuições LogNomal ou Gama, porque têm como suporte $[0, \infty)$ e é naturalmente assimétrica positva - o que pode refletir a tendência de diminuição de custos \cite{briggs2000handling,gray2011applied}, e para os rendimentos $R$, é adequado o uso da distribuição Beta, porque é uma distribuição maleável que tem como suporte $[0,1]$ \cite{briggs2000handling,gray2011applied}.
-
-#######################
+A análise de sensitividade mais apropriada para os dados disponíveis (custos de laboratórios determinados por especialista e estimativas do rendimento dos exames na literatura) é a que consiste em variar os parâmetros do modelo (custos e rendimentos do exames) de acordo com uma distribuição *a priori* determinada pela natureza do parâmetro e estimativas usadas ou opinião de especialistas \cite{briggs2000handling}. Para os custos $C$, o mais apropriado é o uso de das distribuições LogNomal ou Gama, que têm como suporte $[0, \infty)$ \cite{briggs2000handling,gray2011applied}, e para os rendimentos $E$, é adequado o uso da distribuição Beta, que tem como suporte $[0,1]$ \cite{briggs2000handling,gray2011applied}.
 
 Para os custos, foi escolhida a distribuição Gama, cuja parametrização é $C \sim Gama(\alpha, \beta)$, em que a esperança é $\frac{\alpha}{\beta}$ e o coeficiente de variação (razão da variância sobre a esperança) é $\beta$ \cite{degroot2012probability}. Assim, os parâmetros para cada custo serão determinados através de seu valor esperado - consultado por especialista, e coeficiente de variação adequado - justificado pelo gráfico da distribuição gerada.
 
-A parametrização da Beta é $R \sim Beta(\alpha, \beta)$, em que os estimadores pelo método dos momentos são $\hat{\alpha} = \bar{R} \left(\frac{\bar{R}(1 - \bar{R})}{S_R^2} - 1\right)$ e $\hat{\beta} = (1-\bar{R}) \left(\frac{\bar{R}(1 - \bar{R})}{S_R^2} - 1\right)$ \cite{degroot2012probability}. Os parâmetros serão estimados através do método dos momentos com o uso de revisão (do rendimento) dos exames na literatura, quando disponível, e do uso de diversos artigos que determinem o rendimento do exame.
+A parametrização da Beta é $E \sim Beta(\alpha, \beta)$, em que os estimadores pelo método dos momentos são $\hat{\alpha} = \bar{E} \left(\frac{\bar{E}(1 - \bar{E})}{S_E^2} - 1\right)$ e $\hat{\beta} = (1-\bar{E}) \left(\frac{\bar{E}(1 - \bar{E})}{S_E^2} - 1\right)$ \cite{degroot2012probability}. Os parâmetros serão estimados através do método dos momentos com o uso de revisão (do rendimento) dos exames na literatura, quando disponível, e do uso de diversos artigos que determinem o rendimento do exame.
 
 # Resultados
 
@@ -156,7 +158,7 @@ Os dados obtidos estão sumarizados na Tabela \ref{tab:dados}. Os rendimentos us
 
 \begin{table}[!h]
 \centering
-\caption{Dados utilizados na construção da árvore de decisão.}
+\caption{Parâmetros e seus respectivos valores utilizados na árvore de decisão.}
 \label{tab:dados}
 \begin{tabular}{llll}
 \textbf{Descrição}      & \textbf{Sigla}     & \textbf{Valor} & \textbf{Fonte} \\
@@ -184,7 +186,7 @@ No entanto, estes números podem não corresponder aos valores de custo e rendim
 
 Para a análise de sensitividade dos rendimentos dos exames, foram usadas revisões bibliográficas \cite{miller2010consensus} e uma série de artigos que estimam o rendimento \cite{bowling2017genomic, cherot2018using, monroe2016effectiveness, srivastava2014clinical, thevenon2016diagnostic, yang2014molecular}. Esses dados fornecem uma estimativa mais fiel dos rendimentos (*cf.* Lei dos Grandes Números \cite{bernoulli1713ars,poisson1837recherches}) e aproximações para as distribuições dessas estimativas. Estas informações juntas podem ser usadas para definir os parâmetros de uma $Beta$ que captura a incerteza associada na estimação dos rendimentos dos exames.
 
-Para a análse de sensitividade dos custos, a opinião de uma especilista (Joana Prota) foi tomada para determinar quais parâmetros melhor descrevem a realidade, segundo sua experiência. Para tanto, a especialista forneceu um intervalo no qual acredita que esses valores estão mais concentrados. Os parâmetros usados na análise estão sumarizados na Tabela \ref{tab:analsent}. 
+Para a análise de sensitividade dos custos, a opinião de uma especilista (Joana Prota) foi tomada para determinar quais parâmetros melhor descrevem a realidade, segundo sua experiência. Para tanto, a especialista forneceu um intervalo no qual acredita que esses valores estão mais concentrados. Os parâmetros usados na análise estão sumarizados na Tabela \ref{tab:analsent}. 
 <!-- A Figura \ref{fig:hdigama} apresenta as densidades estimadas e seus respectivos intervalos de maior densidade (IMD\footnote{O IMD é, no geral, mais adequado que intervalos de confiança clássicos - que supõem simetria da distribuição, visto que conseguem concentrar mais dados num intervalo menor, e, portanto, expressam melhor a região que mais concentra dados (90\% no caso dos custos e rendimentos).}) a partir das simulações para cada custo, após a determinação dos parâmetros das distribuições. -->
 
 \begin{table}[]
@@ -219,23 +221,24 @@ filter(anal_sens, !(Exame %in% c("Cariótipo", "Cariótipo com Array"))) %>%
   geom_point(alpha = 0.3) + 
   stat_ellipse(geom = "polygon", alpha = 0.2) + 
   scale_y_continuous(labels = scales::dollar_format(prefix = "R$")) + 
-  scale_x_continuous(labels = function(x) paste0(x, "%")) + 
-  scale_color_manual(values = c("#ffa600", "#003f5c")) + 
-  scale_fill_manual(values = c("#ffa600", "#003f5c")) + 
+  scale_color_manual(values = c("deepskyblue4", "chocolate2")) + 
+  scale_fill_manual(values = c("deepskyblue4", "chocolate2")) + 
   labs(x = "Efetividade incremental", y = "Custo incremental") + 
   theme_classic()
 ```
 
 A análise de sensitividade foi realizado através da linguagem de programação estatística R \cite{r} (*c.f.* Apêndice). Deste modo, foram gerados 1000 valores dos rendimentos e custos segundo suas distribuições (Tabela \ref{tab:analsent}). A Figura \ref{fig:RCEI} sumariza esses resultados. Ela apresenta um gráfico de dispersão para os custos e efetividades incrementais do uso de análise do microarray e sequenciamento exoma como testes de primeira linha em comparação com o uso da análise de cariótipo (que é o procedimento padrão realizado atualmente).
 
-É possível perceber através da Figura \ref{fig:RCEI} que o uso do microarray e exoma como exames pilotos tem potencial de alta redução dos custos (entre R\$1.000 e R\$2.000), com uma pequena redução da efetividade (entre 1,5\% e 2\%), visto que para essas duas estratégias a análise de cariótipo não entra no rol de exames. Além disso, o exoma se mostra como o teste piloto mais vantajoso, pois, obteve em 74\% da simulação uma redução de custo maior ou igual que o microarray como teste piloto, e em 83\% um decrésimo na efetividade menor ou igual ao do microarray.
+É possível perceber através da Figura \ref{fig:RCEI} que o uso do microarray e exoma como exames pilotos tem potencial de alta redução dos custos (entre R\$1.000 e R\$2.000), com uma pequena redução da efetividade (entre 1,5 e 2 casos diagnosticados em média a cada 100). Além disso, o exoma se mostra como o teste piloto mais vantajoso, pois obteve uma redução de custo maior ou igual que o microarray como teste piloto em 74\% das simulações, e um decréscimo na efetividade menor ou igual ao do microarray em 83\% das simulações.
 
-Outra observação que se pode fazer através da Figura \ref{fig:RCEI} é que para a análise de microarray o RCEI é muito mais sensível ao seu rendimento que ao seu custo, o que é indicado pelo formato "achatado" de sua elipse de confiança. Já paro o sequenciamento do exoma, o RCEI é sensível a ambos de maneira similar.
+Outra observação que se pode tomar através da Figura \ref{fig:RCEI} é que para a análise de microarray o RCEI é muito mais sensível ao seu rendimento que ao seu custo, o que é indicado pelo formato "achatado" de sua elipse de confiança. Já paro o sequenciamento do exoma, o RCEI é sensível a ambos de maneira similar.
+
+Aqui é importante dizer que com o microarray, o custo médio fica em torno de R$1000 (e não varia muito) comparado com o cariótipo, enquanto que com o exoma, essa redução pode chegar a R$2000. Porém, há casos em que o exoma pode ser mais caro (e isso depende de que?). Por isso, seria interessante fazer a análise de sensitividade determinística, pois possibilitaria ver o efeito de cada fator (custo do exame ou capacidade diagnóstica).
 
 
 # Discussão
 
-A árvore de decisão construída leva a acreditar que a aplicação do sequenciamento do exoma seguida de uma análise de microarray em caso de falha de diagnóstico é mais custo-efetiva que o contrário (análise de microarray antes do sequenciamento do exoma) ou a realização da análise de cariótipo seguida da análise de microarray e sequenciamento do exoma. A Análise de sensitividade reforçou essa conclusão, pois o exoma como exame piloto teve uma redução de custo maior ou igual que o microarray como teste piloto em 74\% da simulação e um decrésimo na efetividade menor ou igual ao do microarray em 83\%. Ela também indica que o custo-efetividade incremental (em relação ao uso de análise de cariótipo) é sensível a apenas o rendimento para o microarray e a ambos o custo e rendimento do exoma. Como é esperado que os custos para o sequenciamento do exoma diminuam (*c.f.* Figura \ref{fig:custo}), é esperado, portanto, que o custo-efetividade incremental seja cada vez menor, sendo o sequenciamento do exoma cada vez mais vantajoso em comparação com o uso da análise de cariótipo como exame piloto.
+A árvore de decisão construída leva a acreditar que a aplicação do sequenciamento do exoma seguida de uma análise de microarray em caso de falha de diagnóstico é mais custo-efetiva que o contrário (análise de microarray antes do sequenciamento do exoma) ou a realização da análise de cariótipo seguida da análise de microarray e sequenciamento do exoma. A análise de sensitividade reforçou essa conclusão. Ela também indica que o custo-efetividade incremental (em relação ao uso de análise de cariótipo) é sensível a ambos o custo e rendimento do exame. Como é esperado que os custos para o sequenciamento do exoma diminuam (*c.f.* Figura \ref{fig:custo}), é esperado, portanto, que o custo-efetividade incremental seja cada vez menor, sendo o sequenciamento do exoma cada vez mais vantajoso em comparação com o uso da análise de cariótipo como exame piloto.
 
 \clearpage
 \bibliographystyle{plain}
@@ -265,7 +268,7 @@ ComputeTree <- function(Exame,
         Efetiv_esper = 100*RCa + 100*(1-RCa)*RArr
         ))
     }
-    # Cariótipo com Array e Exoma
+     Cariótipo com Array e Exoma
     else if (Exame == 'Cariótipo') {
       return(data.frame(
         Exame = Exame,
@@ -314,7 +317,7 @@ param <- list(
   )
 
 nrun <- 1000
-## Exoma
+
 REx <- c(27, 32, 41, 32.5, 27.2) / 100
 REx_simul <- BetaParams(mean(REx), var(REx)) %$%
   rbeta(nrun, alpha, beta)
@@ -322,7 +325,6 @@ CEx <- 6000
 CV_Ex <- 0.02
 CEx_simul <- rgamma(nrun, mean(CEx) * CV_Ex, rate = CV_Ex)
 
-## Array
 RArr <- c(
   10, 14, 10, 9.8, 13.7, 18.6, 5.1, 11, 16.8, 13.6, 20, 16.7, 16, 55, 
   5.6, 35, 5.6, 10, 9.6, 7, 13.8, 6.9, 7.6, 6.3, 16.4, 5.3, 15.6, 7.8, 
@@ -334,14 +336,12 @@ CArr <- 3400
 CV_Arr <- 0.1
 CArr_simul <- rgamma(nrun, mean(CArr) * CV_Arr, rate = CV_Arr)
 
-## Cariotipo
 RCa_simul <- BetaParams(0.03, 0.00001) %$%
   rbeta(nrun, alpha, beta)
 CCa <- 1400
 CV_Ca <- 0.15
 CCa_simul <- rgamma(nrun, mean(CCa) * CV_Ca, rate = CV_Ca)
 
-## bind data
 anal_sens <- rbind(
   ComputeTree(
     'Cariótipo', 
@@ -366,13 +366,10 @@ anal_sens <- rbind(
   )
 anal_sens$CER <- anal_sens$Custo_esper / anal_sens$Efetiv_esper
 
-
-## RCEI
 anal_sens %<>% 
   ComputeRCEI('Microarray', 'Cariótipo') %>%  
   ComputeRCEI('Exoma', 'Cariótipo')
 
-## tornado data
 base_cariotipo <- ComputeTree(
   'Cariótipo', 
   param$Exoma$Rend$base, param$Microarray$Rend$base, param$Cariotipo$Rend$base, 
