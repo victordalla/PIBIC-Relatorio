@@ -140,7 +140,7 @@ A árvore elaborada para avaliar diagnóstico em pacientes com deficiência inte
 \label{fig:arvore_teoria}
 \end{figure}
 
-A probabilidade tomada para cada evento é o rendimento médio (R) de cada exame na literatura revisada. O nó terminal representa o que se gastou com todo o processo (C) e o número médio de diagnósticos que se obteria a cada 100 pacientes com aquele processo tomado (100Ef). O custo foi calculado com base no valor comercial encontrado em laboratórios brasileiros. O número médio de diagnósticos a cada 100 pacientes é determinado por cada caminho na árvore e, portanto, somente é necessária sua soma simples para o cálculo do rendimento esperada para cada decisão. Em contrapartida, o custo esperado para cada decisão deve ser calculado como descrito anteriormente.
+A probabilidade tomada para cada evento é o rendimento médio (R) de cada exame na literatura revisada. O nó terminal representa o que se gastou com todo o processo (C) e o número médio de diagnósticos que se obteria a cada 100 pacientes com aquele processo tomado (100Ef). O custo foi calculado com base no valor comercial encontrado em laboratórios brasileiros. O número médio de diagnósticos a cada 100 pacientes é determinado por cada caminho na árvore e, portanto, somente é necessária sua soma simples para o cálculo do rendimento esperada para cada decisão. Em contrapartida, o custo esperado para cada decisão deve ser calculado como descrito anteriormente. Por exemplo, o custo esperado do uso do exoma como exame piloto é $\text{REx}\cdot \text{CEx} + (1-\text{REx}) [\text{RArr}\cdot (\text{CEx}+\text{CArr}) + (1-\text{RArr}) \cdot (\text{CEx}+\text{CArr})]$.
 
 ## Análise de sensitividade
 
