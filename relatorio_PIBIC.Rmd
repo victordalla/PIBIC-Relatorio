@@ -108,7 +108,15 @@ Este trabalho propõe uma análise de custo-efetividade no diagnóstico de pacie
 
 Este estudo tem como objetivo principal elaborar modelos matemáticos de custo-efetividade que comparam diferentes abordagens diagnósticas com testes genéticos para populações distintas de pacientes, visando gerar evidência científica para o uso racional de novas tecnologias em saúde. A população tomada para análise é a de pacientes com deficiência intelectual de causa indeterminada. A elaboração do modelo matemático tem como perspectiva de custo a do SUS e da Saúde Suplementar.
 
+## Análise de custo-efetividade
+
+O conceito custo-efetividade na saúde surgiu em países desenvolvidos, no final dos anos de 1970 \cite{secoli2005farmacoeconomia}. A análise de custo-efetividade é uma metodologia de síntese em que os custos são confrontados com desfechos clínicos. O objetivo da análise de custo-efetividade é avaliar o impacto de distintas alternativas, que visem identificá-las com melhores efeitos do tratamento, geralmente, em troca de menor custo. Portanto, uma característica importante é que esses estudos são sempre comparativos e explícitos e se destinam a selecionar a melhor opção para atingir a eficiência.
+
 Na análise de custo-efetividade, dados provenientes de diversas fontes, como dados primários, revisões sistemáticas e estudos de custos, podem ser integrados em modelos como árvores de decisão, coortes simuladas de Markov, microssimulação no nível de pacientes ou simulação de eventos discretos, a fim de oferecer estimativas mais robustas das reais relações de custo-efetividade existentes e do grau de incerteza dos valores obtidos \cite{briggs2006decision, drummond2015methods, gray2011applied, silva2003avaliaccao, soarez2014modelos}.
+
+Árvores de decisão são a estrutura mais simples e direta de modelagem. Nela, as diferentes possibilidades de desfechos são apresentadas explicitamente com seus respectivos custos e efetividades. Como elas não comportam a modelagem de eventos no tempo, elas são mais adequadas para comparar processos de curta duração (um exame, por exemplo), cujos efeitos são rápidos (o diagnóstico de um exame, por exemplo) e não há interação entre indívíduos de maneira a afetar os custos, efetividades ou desfechos \cite{petrou2011economic,barton2004modelling,brennan2006taxonomy}.
+
+Em situações com muitos ou infinitos desfechos (tempo de sobrevivência, por exemplo), eventos recorrentes (diversas sessões de um tratamento, por exemplo) ou cujas taxas de ocorrência variam no tempo, modelos markovianos se fazem mais adequados do que ávores de decisão \cite{petrou2011economic,barton2004modelling,brennan2006taxonomy}. No entanto, esses modelos têm como princial hipótese a de que os próximos eventos só dependem dos anteriores e que não há interação entre indivíduos. Por isso, processo de longa memória ou com interações requerem o uso de técnicas mais sofisticadas, como microssimulação no nível de pacientes ou simulação de eventos discretos, que, apesar de extremamente flexíveis, possuem um custo computacional alto (*c.f.* \cite{pidd1998computer}).
 
 As diferentes estratégias são comparadas entre si através da razão custo-efetividade incremental (RCEI) ou do inglês *Incremental Cost Effectiveness Ratio* (ICER). A RCEI é definida como a razão entre a diferença de custos das duas estratégias comparadas ($C_0$ e $C_1$, onde $C_1 - C_0$ é o custo incremental) e a diferença de efetividade ($E_0$ e $E_1$, onde $E_1 - R_0$ é a efetividade incremental) : $\text{ICER} = \frac{()}{()}$ \cite{minsaude2008avaliacao,SECOLI2010}. O custo é medido em unidades monetárias e a efetividade é medido em unidades clínicas, que nesse caso é o preço comercial do exame e número médio de casos diagnosticados pelo exame a cada 100 pacientes com deficiência intelectual, respectivamente. Desse modo, o resultado é expresso em termos do custo por unidade clínica \cite{gray2011applied}.
 
@@ -201,8 +209,8 @@ Rendimento do exoma      & Beta & 0,32 & - & 21; 45 & \cite{bowling2017genomic, 
 Rendimento do array      & Beta & 0,14 & - & 1,6; 9,9 & \cite{miller2010consensus} \\
 Rendimento do cariótipo  & Beta & 0,03 & - & 87; 2822 & Opinião de especialista \\
 Custo do exoma           & Gama & 6000 & [5000; 7000] & 120; 0,02 & Opinião de especialista \\
-Custo do array           & Gama & 3400  & [3000, 4000] & 340; 0,1 & Opinião de especialista \\
-Custo do cariótipo       & Gama & 1400 & [1200, 1600] & 140; 0,15 & Opinião de especialista
+Custo do array           & Gama & 3400  & [3000; 4000] & 340; 0,1 & Opinião de especialista \\
+Custo do cariótipo       & Gama & 1400 & [1200; 1600] & 140; 0,15 & Opinião de especialista
 \end{tabular}}
 \end{table}
 
@@ -233,7 +241,7 @@ A análise de sensitividade foi realizado através da linguagem de programação
 
 Outra observação que se pode tomar através da Figura \ref{fig:RCEI} é que para a análise de microarray o RCEI é muito mais sensível ao seu rendimento que ao seu custo, o que é indicado pelo formato "achatado" de sua elipse de confiança. Já paro o sequenciamento do exoma, o RCEI é sensível a ambos de maneira similar.
 
-Aqui é importante dizer que com o microarray, o custo médio fica em torno de R$1000 (e não varia muito) comparado com o cariótipo, enquanto que com o exoma, essa redução pode chegar a R$2000. Porém, há casos em que o exoma pode ser mais caro (e isso depende de que?). Por isso, seria interessante fazer a análise de sensitividade determinística, pois possibilitaria ver o efeito de cada fator (custo do exame ou capacidade diagnóstica).
+<!-- Aqui é importante dizer que com o microarray, o custo médio fica em torno de R\$1000 (e não varia muito) comparado com o cariótipo, enquanto que com o exoma, essa redução pode chegar a R\$2000. Porém, há casos em que o exoma pode ser mais caro (e isso depende de que?). Por isso, seria interessante fazer a análise de sensitividade determinística, pois possibilitaria ver o efeito de cada fator (custo do exame ou capacidade diagnóstica). -->
 
 
 # Discussão

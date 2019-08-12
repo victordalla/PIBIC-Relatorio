@@ -128,6 +128,7 @@ anal_sens %<>%
   ComputeRCEI('Microarray', 'Cariótipo') %>%  
   ComputeRCEI('Exoma', 'Cariótipo')
 
+
 ## tornado data
 base_cariotipo <- ComputeTree(
   'Cariótipo', 
@@ -137,6 +138,7 @@ base_cariotipo <- ComputeTree(
 
 list(
   anal_sens      = anal_sens, 
+  anal_sens_det  = anal_sens_det, 
   base_cariotipo = base_cariotipo, 
   REx_simul  = REx_simul, CEx_simul   = CEx_simul, 
   RArr_simul = RArr_simul, CArr_simul = CArr_simul, 
